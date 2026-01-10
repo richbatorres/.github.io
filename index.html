@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Martina i Tin</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #c9a24d;
+  --bg: #faf9f7;
+  --text: #333;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+section {
+  padding: 60px 20px;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  text-align: center;
+}
+
+h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-weight: 400;
+  margin-top: 0;
+}
+
+.divider {
+  width: 60px;
+  height: 3px;
+  background: var(--primary);
+  margin: 30px auto;
+}
+
+.hero-img {
+  width: 100%;
+  border-radius: 18px;
+  margin-top: 30px;
+}
+
+.info p {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.program {
+  display: grid;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.program-item {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.program-item span {
+  font-size: 28px;
+}
+
+iframe {
+  width: 100%;
+  border: none;
+  border-radius: 16px;
+}
+
+footer {
+  padding: 40px 20px;
+  font-size: 14px;
+  opacity: 0.7;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<section>
+  <div class="container">
+    <h1>Ana & Marko</h1>
+    <h2>Vjenčanje</h2>
+    <div class="divider"></div>
+
+    <p>5. lipnja 2026.</p>
+
+    <!-- VAŠA SLIKA -->
+    <img src="https://via.placeholder.com/800x500"
+         alt="Naša slika"
+         class="hero-img">
+  </div>
+</section>
+
+<!-- INFO -->
+<section>
+  <div class="container info">
+    <p>
+      S velikom radošću vas pozivamo da zajedno s nama
+      proslavite dan našeg vjenčanja.
+    </p>
+
+    <p>
+      📍 Crkva sv. Marka, Zagreb<br>
+      🍽️ Svečana večera: Restoran X
+    </p>
+  </div>
+</section>
+
+<!-- PROGRAM -->
+<section>
+  <div class="container">
+    <h2>Program</h2>
+    <div class="divider"></div>
+
+    <div class="program">
+      <div class="program-item">
+        <span>💍</span>
+        <p>16:00 – Crkvena ceremonija</p>
+      </div>
+      <div class="program-item">
+        <span>🥂</span>
+        <p>18:00 – Doček gostiju</p>
+      </div>
+      <div class="program-item">
+        <span>🎉</span>
+        <p>19:00 – Večera & slavlje</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAPS -->
+<section>
+  <div class="container">
+    <h2>Lokacija</h2>
+    <div class="divider"></div>
+
+    <!-- GOOGLE MAPS EMBED -->
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2781.8936"
+      height="300"
+      loading="lazy">
+    </iframe>
+  </div>
+</section>
+
+<!-- RSVP -->
+<section>
+  <div class="container">
+    <h2>Potvrda dolaska</h2>
+    <div class="divider"></div>
+
+    <!-- GOOGLE FORMS EMBED -->
+    <iframe
+      src="https://docs.google.com/forms/d/e/TVOJ_FORM_ID/viewform?embedded=true"
+      height="600">
+    </iframe>
+  </div>
+</section>
+
+<footer>
+  Veselimo se vašem dolasku 🤍
+</footer>
+
+</body>
+</html>
