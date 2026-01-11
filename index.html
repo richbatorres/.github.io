@@ -6,12 +6,12 @@
 <title>Martina i Tin</title>
 
 <!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fleur+De+Leah:wght@400;500;600;700&family=Playfair+Display:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --primary: #c9a24d;
-  --bg: #faf9f7;
+  --primary: #9ac952f3;
+  --bg: #e4f0d2;
   --text: #333;
 }
 
@@ -21,9 +21,90 @@
 
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Playfair Display', serif;
   background: var(--bg);
   color: var(--text);
+  overflow-x: hidden;
+}
+
+.envelope-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.envelope-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: var(--bg);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  border: 3px solid #5a7a2f;
+  transform-origin: 50% 0;
+  transition: transform 1s ease, opacity 0.5s ease 1s;
+  z-index: 3;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.envelope-flap.opened {
+  transform: rotateX(-180deg);
+  opacity: 0;
+}
+
+.envelope-body {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  transition: transform 1.5s ease 1.5s, opacity 0.5s ease 2.8s;
+  z-index: 1;
+}
+
+.envelope-left {
+  position: absolute;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: var(--bg);
+  clip-path: polygon(0 0, 100% 50%, 100% 100%, 0 100%);
+  border: 3px solid #5a7a2f;
+  border-right: none;
+  box-shadow: -4px 4px 10px rgba(0,0,0,0.15);
+}
+
+.envelope-right {
+  position: absolute;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: var(--bg);
+  clip-path: polygon(0 50%, 100% 0, 100% 100%, 0 100%);
+  border: 3px solid #5a7a2f;
+  border-left: none;
+  box-shadow: 4px 4px 10px rgba(0,0,0,0.15);
+}
+
+.envelope-body.opened {
+  transform: translateY(100%);
+  opacity: 0;
 }
 
 section {
@@ -37,12 +118,16 @@ section {
 }
 
 h1 {
-  font-size: 42px;
+  font-family: 'Fleur De Leah', cursive;
+  font-size: 100px;
   margin-bottom: 10px;
+  font-weight: 600;
 }
 
 h2 {
-  font-weight: 400;
+  font-family: 'Fleur De Leah', cursive;
+  font-weight: 500;
+  font-size: 70px;
   margin-top: 0;
 }
 
@@ -64,21 +149,67 @@ h2 {
   line-height: 1.6;
 }
 
-.program {
-  display: grid;
-  gap: 20px;
+.program-timeline {
   margin-top: 40px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.program-item {
-  background: white;
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+.timeline-item {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 30px;
+  text-align: left;
 }
 
-.program-item span {
-  font-size: 28px;
+.timeline-time {
+  min-width: 120px;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text);
+  padding-top: 2px;
+}
+
+.timeline-divider {
+  width: 2px;
+  background: var(--primary);
+  flex-shrink: 0;
+}
+
+.timeline-content {
+  flex: 1;
+  padding-bottom: 10px;
+}
+
+.timeline-activity {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: var(--text);
+}
+
+.timeline-location {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+.timeline-location a {
+  color: #666;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.timeline-location a:hover {
+  color: var(--primary);
+}
+
+.timeline-location a::after {
+  content: '→';
+  font-size: 14px;
 }
 
 iframe {
@@ -97,6 +228,26 @@ footer {
 
 <body>
 
+<div class="envelope-overlay" id="envelopeOverlay">
+  <div class="envelope-container" onclick="openEnvelope()">
+    <div class="envelope-flap"></div>
+    <div class="envelope-body">
+      <div class="envelope-left"></div>
+      <div class="envelope-right"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function openEnvelope() {
+  document.querySelector('.envelope-flap').classList.add('opened');
+  document.querySelector('.envelope-body').classList.add('opened');
+  setTimeout(() => {
+    document.getElementById('envelopeOverlay').remove();
+  }, 3500);
+}
+</script>
+
 <!-- HERO -->
 <section>
   <div class="container">
@@ -104,10 +255,8 @@ footer {
     <h2>Vjenčanje</h2>
     <div class="divider"></div>
 
-    <p>5. lipnja 2026.</p>
-
     <!-- VAŠA SLIKA -->
-    <img src="https://via.placeholder.com/800x500"
+    <img src="zaruke.jpg"
          alt="Naša slika"
          class="hero-img">
   </div>
@@ -120,40 +269,86 @@ footer {
       S velikom radošću vas pozivamo da zajedno s nama
       proslavite dan našeg vjenčanja.
     </p>
-
-    <p>
-      📍 Crkva sv. Marka, Zagreb<br>
-      🍽️ Svečana večera: Restoran X
-    </p>
   </div>
 </section>
 
 <!-- PROGRAM -->
 <section>
   <div class="container">
-    <h2>Program</h2>
+    <h2>5. lipnja 2026.</h2>
     <div class="divider"></div>
 
-    <div class="program">
-      <div class="program-item">
-        <span>🏨</span>
-        <p>13:00 – Check in u hotelu <a href="https://maps.app.goo.gl/C539mv5piSMFJHa57" target="_blank">Dvorac Janković</a></p>
+    <div class="program-timeline">
+      <div class="timeline-item">
+        <div class="timeline-time">13:00</div>
+        <div class="timeline-divider"></div>
+        <div class="timeline-content">
+          <div class="timeline-activity">Check in u hotelu</div>
+          <p class="timeline-location"><a href="https://maps.app.goo.gl/C539mv5piSMFJHa57" target="_blank">Dvorac Janković</a></p>
+        </div>
       </div>
-      <div class="program-item">
-        <span>☕</span>
-        <p>14:00 – Okupljanje gostiju u caffe bar <a href="https://maps.app.goo.gl/nRhkPvaDGsdz4f7i9" target="_blank">The Brick</a></p>
+
+      <div class="timeline-item">
+        <div class="timeline-time">14:00 - 15:20</div>
+        <div class="timeline-divider"></div>
+        <div class="timeline-content">
+          <div class="timeline-activity">Okupljanje gostiju</div>
+          <p class="timeline-location"><a href="https://maps.app.goo.gl/nRhkPvaDGsdz4f7i9" target="_blank">Caffe bar The Brick</a></p>
+        </div>
       </div>
-      <div class="program-item">
-        <span>💍</span>
-        <p>16:00 – Crkvena ceremonija</p>
+
+      <div class="timeline-item">
+        <div class="timeline-time">15:30 - 16:00</div>
+        <div class="timeline-divider"></div>
+        <div class="timeline-content">
+          <div class="timeline-activity">Crkvena ceremonija</div>
+          <p class="timeline-location"><a href="https://maps.app.goo.gl/JBX9p9scsCBmUMfR7" target="_blank">Crkva sv. Roka</a></p>
+        </div>
       </div>
-      <div class="program-item">
-        <span>🥂</span>
-        <p>18:00 – Doček gostiju</p>
+
+      <div class="timeline-item">
+        <div class="timeline-time">17:00 - 19:00</div>
+        <div class="timeline-divider"></div>
+        <div class="timeline-content">
+          <div class="timeline-activity">Još jedno okupljanje</div>
+          <p class="timeline-location"><a href="https://maps.app.goo.gl/dS3m1niK7LdJ7DLW8" target="_blank">Sala Vile Bilogore</a></p>
+        </div>
       </div>
-      <div class="program-item">
-        <span>🎉</span>
-        <p>19:00 – Večera & slavlje</p>
+
+      <div class="timeline-item">
+        <div class="timeline-time">19:00 - 04:00</div>
+        <div class="timeline-divider"></div>
+        <div class="timeline-content">
+          <div class="timeline-activity">Večera & fešta</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAM - DAN 2 -->
+<section style="padding-top: 20px;">
+  <div class="container">
+    <h2>6. lipnja 2026.</h2>
+    <div class="divider"></div>
+
+    <div class="program-timeline">
+      <div class="timeline-item">
+        <div class="timeline-time">08:00 - 10:00</div>
+        <div class="timeline-divider"></div>
+        <div class="timeline-content">
+          <div class="timeline-activity">Doručak u hotelu</div>
+          <p class="timeline-location"><a href="https://maps.app.goo.gl/C539mv5piSMFJHa57" target="_blank">Dvorac Janković</a></p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-time">12:00</div>
+        <div class="timeline-divider"></div>
+        <div class="timeline-content">
+          <div class="timeline-activity">Ručak u domu</div>
+          <p class="timeline-location"><a href="https://maps.app.goo.gl/C539mv5piSMFJHa57" target="_blank">Dvorac Janković</a></p>
+        </div>
       </div>
     </div>
   </div>
@@ -162,7 +357,7 @@ footer {
 <!-- MAPS -->
 <section>
   <div class="container">
-    <h2>Lokacija</h2>
+    <h2>Planirane rute</h2>
     <div class="divider"></div>
 
     <!-- GOOGLE MAPS EMBED -->
