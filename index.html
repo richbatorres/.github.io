@@ -72,9 +72,9 @@ body {
   z-index: 3;
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
-  padding-bottom: 20px;
+  padding-bottom: 0;
 }
 
 .envelope-flap::before,
@@ -311,6 +311,138 @@ iframe {
   border-radius: 16px;
 }
 
+.rsvp-form {
+  max-width: 500px;
+  margin: 40px auto;
+  text-align: left;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-label {
+  display: block;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text);
+  transition: border-color 0.3s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(201, 167, 82, 0.1);
+}
+
+.form-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.guest-list {
+  margin-top: 15px;
+}
+
+.guest-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.guest-item input {
+  flex: 1;
+}
+
+.btn-remove {
+  padding: 8px 12px;
+  background: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.btn-remove:hover {
+  background: #c9302c;
+}
+
+.btn-add {
+  padding: 10px 20px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: 'Playfair Display', serif;
+  transition: background 0.3s;
+  margin-top: 10px;
+}
+
+.btn-add:hover {
+  background: #b8964a;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 15px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  transition: background 0.3s;
+  margin-top: 20px;
+}
+
+.btn-submit:hover {
+  background: #b8964a;
+}
+
+.btn-submit:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.form-message {
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.form-message.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.form-message.error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
 footer {
   padding: 40px 20px;
   font-size: 14px;
@@ -474,10 +606,90 @@ function openEnvelope() {
     <h2>Potvrda dolaska</h2>
     <div class="divider"></div>
 
-    <!-- GOOGLE FORMS EMBED -->
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScF-ZXgHEzYS6Sf3z7ThS6Y-aLmuVRipTxy1SMTo_L3GdXZMQ/viewform?embedded=true" width="640" height="795" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+    <form class="rsvp-form" id="rsvpForm">
+      <div class="form-group">
+        <label class="form-label">Imena i prezimena gostiju *</label>
+        <div class="guest-list" id="guestList">
+          <div class="guest-item">
+            <input type="text" class="form-input" placeholder="Ime i prezime" required>
+          </div>
+        </div>
+        <button type="button" class="btn-add" onclick="addGuest()">+ Dodaj gosta</button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Napomena (prehrambena ograničenja, poruka, itd.)</label>
+        <textarea class="form-input form-textarea" id="notes" placeholder="Unesite napomenu..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submitBtn">Pošalji potvrdu</button>
+      <div id="formMessage"></div>
+    </form>
   </div>
 </section>
+
+<script>
+function addGuest() {
+  const guestList = document.getElementById('guestList');
+  const guestItem = document.createElement('div');
+  guestItem.className = 'guest-item';
+  guestItem.innerHTML = `
+    <input type="text" class="form-input" placeholder="Ime i prezime" required>
+    <button type="button" class="btn-remove" onclick="removeGuest(this)">✕</button>
+  `;
+  guestList.appendChild(guestItem);
+}
+
+function removeGuest(btn) {
+  btn.parentElement.remove();
+}
+
+document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  
+  const submitBtn = document.getElementById('submitBtn');
+  const messageDiv = document.getElementById('formMessage');
+  
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Šaljem...';
+  messageDiv.innerHTML = '';
+  
+  const guestInputs = document.querySelectorAll('.guest-item input');
+  const guests = Array.from(guestInputs).map(input => input.value.trim()).filter(val => val);
+  const notes = document.getElementById('notes').value.trim();
+  
+  if (guests.length === 0) {
+    messageDiv.innerHTML = '<div class="form-message error">Molimo unesite barem jednog gosta.</div>';
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Pošalji potvrdu';
+    return;
+  }
+  
+  try {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbxxpHO8vjFa-9op2_Hdbm46cfDR5Mm-tfeKghGJTmKm7WYJ2RZQXdwL7ASrEibmsXmA/exec', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        guests: guests,
+        notes: notes
+      })
+    });
+    
+    messageDiv.innerHTML = '<div class="form-message success">Hvala! Vaša potvrda je uspješno poslana. 🤍</div>';
+    document.getElementById('rsvpForm').reset();
+    document.getElementById('guestList').innerHTML = '<div class="guest-item"><input type="text" class="form-input" placeholder="Ime i prezime" required></div>';
+    
+  } catch (error) {
+    messageDiv.innerHTML = '<div class="form-message error">Došlo je do greške. Molimo pokušajte ponovno.</div>';
+  }
+  
+  submitBtn.disabled = false;
+  submitBtn.textContent = 'Pošalji potvrdu';
+});
+</script>
 
 <h2>
   Veselimo se vašem dolasku 🤍
