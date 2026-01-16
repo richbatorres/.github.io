@@ -490,7 +490,7 @@ function openEnvelope() {
     <div class="divider"></div>
 
     <!-- VAŠA SLIKA -->
-    <img src="zaruke.jpg"
+    <img src="zaruke anime.png"
          alt="Naša slika"
          class="hero-img">
   </div>
@@ -607,11 +607,14 @@ function openEnvelope() {
     <div class="divider"></div>
 
     <form class="rsvp-form" id="rsvpForm">
+      <!-- Honeypot field (hidden from users, catches bots) -->
+      <input type="text" name="website" id="website" style="display:none" tabindex="-1" autocomplete="off">
+      
       <div class="form-group">
         <label class="form-label">Imena i prezimena gostiju *</label>
         <div class="guest-list" id="guestList">
           <div class="guest-item">
-            <input type="text" class="form-input" placeholder="Ime i prezime" required>
+            <input type="text" class="form-input" placeholder="Ime i prezime" required maxlength="100">
           </div>
         </div>
         <button type="button" class="btn-add" onclick="addGuest()">+ Dodaj gosta</button>
@@ -619,7 +622,7 @@ function openEnvelope() {
 
       <div class="form-group">
         <label class="form-label">Napomena (prehrambena ograničenja, poruka, itd.)</label>
-        <textarea class="form-input form-textarea" id="notes" placeholder="Unesite napomenu..."></textarea>
+        <textarea class="form-input form-textarea" id="notes" placeholder="Unesite napomenu..." maxlength="500"></textarea>
       </div>
 
       <button type="submit" class="btn-submit" id="submitBtn">Pošalji potvrdu</button>
@@ -629,12 +632,22 @@ function openEnvelope() {
 </section>
 
 <script>
+let lastSubmitTime = 0;
+
 function addGuest() {
   const guestList = document.getElementById('guestList');
+  const currentGuests = guestList.querySelectorAll('.guest-item').length;
+  
+  // Limit max 10 guests
+  if (currentGuests >= 10) {
+    alert('Maksimalan broj gostiju je 10.');
+    return;
+  }
+  
   const guestItem = document.createElement('div');
   guestItem.className = 'guest-item';
   guestItem.innerHTML = `
-    <input type="text" class="form-input" placeholder="Ime i prezime" required>
+    <input type="text" class="form-input" placeholder="Ime i prezime" required maxlength="100">
     <button type="button" class="btn-remove" onclick="removeGuest(this)">✕</button>
   `;
   guestList.appendChild(guestItem);
@@ -644,19 +657,41 @@ function removeGuest(btn) {
   btn.parentElement.remove();
 }
 
+function sanitizeInput(input) {
+  return input.replace(/<[^>]*>/g, '').trim();
+}
+
 document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
   e.preventDefault();
   
   const submitBtn = document.getElementById('submitBtn');
   const messageDiv = document.getElementById('formMessage');
   
+  // Rate limiting - prevent multiple submissions within 30 seconds
+  const now = Date.now();
+  if (now - lastSubmitTime < 30000) {
+    messageDiv.innerHTML = '<div class="form-message error">Molimo pričekajte 30 sekundi prije ponovnog slanja.</div>';
+    return;
+  }
+  
   submitBtn.disabled = true;
   submitBtn.textContent = 'Šaljem...';
   messageDiv.innerHTML = '';
   
+  // Check honeypot
+  const honeypot = document.getElementById('website').value;
+  if (honeypot) {
+    messageDiv.innerHTML = '<div class="form-message error">Greška pri slanju.</div>';
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Pošalji potvrdu';
+    return;
+  }
+  
   const guestInputs = document.querySelectorAll('.guest-item input');
-  const guests = Array.from(guestInputs).map(input => input.value.trim()).filter(val => val);
-  const notes = document.getElementById('notes').value.trim();
+  const guests = Array.from(guestInputs)
+    .map(input => sanitizeInput(input.value))
+    .filter(val => val);
+  const notes = sanitizeInput(document.getElementById('notes').value);
   
   if (guests.length === 0) {
     messageDiv.innerHTML = '<div class="form-message error">Molimo unesite barem jednog gosta.</div>';
@@ -674,13 +709,16 @@ document.getElementById('rsvpForm').addEventListener('submit', async function(e)
       },
       body: JSON.stringify({
         guests: guests,
-        notes: notes
+        notes: notes,
+        timestamp: new Date().toISOString(),
+        website: honeypot
       })
     });
     
+    lastSubmitTime = now;
     messageDiv.innerHTML = '<div class="form-message success">Hvala! Vaša potvrda je uspješno poslana. 🤍</div>';
     document.getElementById('rsvpForm').reset();
-    document.getElementById('guestList').innerHTML = '<div class="guest-item"><input type="text" class="form-input" placeholder="Ime i prezime" required></div>';
+    document.getElementById('guestList').innerHTML = '<div class="guest-item"><input type="text" class="form-input" placeholder="Ime i prezime" required maxlength="100"></div>';
     
   } catch (error) {
     messageDiv.innerHTML = '<div class="form-message error">Došlo je do greške. Molimo pokušajte ponovno.</div>';
