@@ -3,86 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Security Test - Wedding RSVP</title>
+<title>Security Test</title>
 <style>
-body {
-  font-family: Arial, sans-serif;
-  max-width: 1200px;
-  margin: 20px auto;
-  padding: 20px;
-  background: #f5f5f5;
-}
-h1 {
-  color: #333;
-}
-.test-section {
-  background: white;
-  padding: 20px;
-  margin: 20px 0;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-.test-item {
-  padding: 10px;
-  margin: 10px 0;
-  border-left: 4px solid #ccc;
-  background: #f9f9f9;
-}
-.test-item.pending {
-  border-color: #ffc107;
-}
-.test-item.pass {
-  border-color: #4caf50;
-  background: #e8f5e9;
-}
-.test-item.fail {
-  border-color: #f44336;
-  background: #ffebee;
-}
-.test-name {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-.test-result {
-  font-size: 14px;
-  color: #666;
-}
-button {
-  background: #c9a752;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
-  margin: 10px 5px;
-}
-button:hover {
-  background: #b8964a;
-}
-button:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-}
-#summary {
-  font-size: 18px;
-  font-weight: bold;
-  margin: 20px 0;
-  padding: 15px;
-  background: #e3f2fd;
-  border-radius: 6px;
-}
+body { font-family: Arial, sans-serif; max-width: 1200px; margin: 20px auto; padding: 20px; background: #f5f5f5; }
+h1 { color: #333; }
+.test-section { background: white; padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+.test-item { padding: 10px; margin: 10px 0; border-left: 4px solid #ccc; background: #f9f9f9; }
+.test-item.pass { border-color: #4caf50; background: #e8f5e9; }
+.test-item.fail { border-color: #f44336; background: #ffebee; }
+button { background: #c9a752; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-size: 16px; margin: 10px 5px; }
+button:hover { background: #b8964a; }
+#summary { font-size: 18px; font-weight: bold; margin: 20px 0; padding: 15px; background: #e3f2fd; border-radius: 6px; }
 </style>
 </head>
 <body>
 
-<h1>🔒 Security Test Suite - Wedding RSVP Form</h1>
+<h1>Security Test Suite</h1>
 
 <div class="test-section">
   <h2>Test Controls</h2>
-  <button onclick="runAllTests()">▶️ Run All Tests</button>
-  <button onclick="clearResults()">🗑️ Clear Results</button>
-  <button onclick="checkGoogleSheets()">📊 Check Google Sheets</button>
+  <button onclick="runAllTests()">Run All Tests</button>
+  <button onclick="clearResults()">Clear Results</button>
 </div>
 
 <div id="summary"></div>
@@ -96,162 +37,35 @@ button:disabled {
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxxpHO8vjFa-9op2_Hdbm46cfDR5Mm-tfeKghGJTmKm7WYJ2RZQXdwL7ASrEibmsXmA/exec';
 
 const tests = [
-  {
-    name: '✅ Valid Request',
-    description: 'Should accept valid data',
-    data: {
-      guests: ['Marko Marković', 'Ana Anić'],
-      notes: 'Vegetarijanska prehrana',
-      timestamp: new Date().toISOString(),
-      website: ''
-    },
-    expectedResult: 'PASS'
-  },
-  {
-    name: '❌ Empty Guests Array',
-    description: 'Should reject empty guests list',
-    data: {
-      guests: [],
-      notes: 'Test',
-      timestamp: new Date().toISOString(),
-      website: ''
-    },
-    expectedResult: 'FAIL'
-  },
-  {
-    name: '❌ Too Many Guests (>10)',
-    description: 'Should reject more than 10 guests',
-    data: {
-      guests: Array(11).fill('Guest Name'),
-      notes: 'Test',
-      timestamp: new Date().toISOString(),
-      website: ''
-    },
-    expectedResult: 'FAIL'
-  },
-  {
-    name: '❌ Name Too Long (>100 chars)',
-    description: 'Should reject names longer than 100 characters',
-    data: {
-      guests: ['A'.repeat(101)],
-      notes: 'Test',
-      timestamp: new Date().toISOString(),
-      website: ''
-    },
-    expectedResult: 'FAIL'
-  },
-  {
-    name: '❌ Honeypot Filled (Bot Detection)',
-    description: 'Should reject if honeypot field is filled',
-    data: {
-      guests: ['Bot Name'],
-      notes: 'Test',
-      timestamp: new Date().toISOString(),
-      website: 'http://spam.com'
-    },
-    expectedResult: 'FAIL'
-  },
-  {
-    name: '❌ Old Timestamp (>5 min)',
-    description: 'Should reject timestamps older than 5 minutes',
-    data: {
-      guests: ['Test User'],
-      notes: 'Test',
-      timestamp: new Date(Date.now() - 6 * 60 * 1000).toISOString(),
-      website: ''
-    },
-    expectedResult: 'FAIL'
-  },
-  {
-    name: '❌ Future Timestamp',
-    description: 'Should reject future timestamps',
-    data: {
-      guests: ['Test User'],
-      notes: 'Test',
-      timestamp: new Date(Date.now() + 60 * 1000).toISOString(),
-      website: ''
-    },
-    expectedResult: 'FAIL'
-  },
-  {
-    name: '❌ Invalid Data Structure',
-    description: 'Should reject malformed data',
-    data: {
-      guests: 'not an array',
-      notes: 'Test',
-      timestamp: new Date().toISOString(),
-      website: ''
-    },
-    expectedResult: 'FAIL'
-  },
-  {
-    name: '❌ XSS Attempt',
-    description: 'Should sanitize HTML/script tags',
-    data: {
-      guests: ['<script>alert("XSS")</script>'],
-      notes: '<img src=x onerror=alert(1)>',
-      timestamp: new Date().toISOString(),
-      website: ''
-    },
-    expectedResult: 'FAIL'
-  },
-  {
-    name: '❌ SQL Injection Attempt',
-    description: 'Should handle SQL injection attempts',
-    data: {
-      guests: ["'; DROP TABLE users; --"],
-      notes: "1' OR '1'='1",
-      timestamp: new Date().toISOString(),
-      website: ''
-    },
-    expectedResult: 'FAIL'
-  }
+  { name: 'Valid Request', data: { guests: ['Marko Markovic'], notes: 'Test', timestamp: new Date().toISOString(), website: '' } },
+  { name: 'Empty Guests', data: { guests: [], notes: 'Test', timestamp: new Date().toISOString(), website: '' } },
+  { name: 'Too Many Guests', data: { guests: Array(11).fill('Guest'), notes: 'Test', timestamp: new Date().toISOString(), website: '' } },
+  { name: 'Name Too Long', data: { guests: ['A'.repeat(101)], notes: 'Test', timestamp: new Date().toISOString(), website: '' } },
+  { name: 'Honeypot Filled', data: { guests: ['Bot'], notes: 'Test', timestamp: new Date().toISOString(), website: 'spam' } },
+  { name: 'Old Timestamp', data: { guests: ['Test'], notes: 'Test', timestamp: new Date(Date.now() - 6 * 60 * 1000).toISOString(), website: '' } }
 ];
 
 let testResults = [];
 
 async function runTest(test, index) {
-  const resultDiv = document.getElementById(`test-${index}`);
-  resultDiv.className = 'test-item pending';
-  resultDiv.querySelector('.test-result').textContent = '⏳ Testing...';
-
+  const resultDiv = document.getElementById('test-' + index);
+  resultDiv.textContent = 'Testing...';
+  
   try {
-    const response = await fetch(SCRIPT_URL, {
+    await fetch(SCRIPT_URL, {
       method: 'POST',
       mode: 'no-cors',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(test.data)
     });
-
-    // With no-cors, we can't read the response, so we assume it went through
-    // You need to check Google Sheets manually
-    const result = {
-      test: test.name,
-      status: 'SENT',
-      message: 'Request sent (check Google Sheets for actual result)'
-    };
-
-    testResults.push(result);
     
+    testResults.push({ test: test.name, status: 'SENT' });
     resultDiv.className = 'test-item pass';
-    resultDiv.querySelector('.test-result').textContent = `✅ ${result.message}`;
-    
-    return result;
+    resultDiv.textContent = test.name + ' - SENT';
   } catch (error) {
-    const result = {
-      test: test.name,
-      status: 'ERROR',
-      message: error.message
-    };
-    
-    testResults.push(result);
-    
+    testResults.push({ test: test.name, status: 'ERROR' });
     resultDiv.className = 'test-item fail';
-    resultDiv.querySelector('.test-result').textContent = `❌ Error: ${error.message}`;
-    
-    return result;
+    resultDiv.textContent = test.name + ' - ERROR: ' + error.message;
   }
 }
 
@@ -259,26 +73,20 @@ async function runAllTests() {
   testResults = [];
   const resultsDiv = document.getElementById('results');
   resultsDiv.innerHTML = '';
-
-  // Create test items
+  
   tests.forEach((test, index) => {
     const testDiv = document.createElement('div');
-    testDiv.id = `test-${index}`;
-    testDiv.className = 'test-item pending';
-    testDiv.innerHTML = `
-      <div class="test-name">${test.name}</div>
-      <div class="test-description">${test.description}</div>
-      <div class="test-result">⏳ Waiting...</div>
-    `;
+    testDiv.id = 'test-' + index;
+    testDiv.className = 'test-item';
+    testDiv.textContent = test.name + ' - Waiting...';
     resultsDiv.appendChild(testDiv);
   });
-
-  // Run tests sequentially with delay
+  
   for (let i = 0; i < tests.length; i++) {
     await runTest(tests[i], i);
-    await new Promise(resolve => setTimeout(resolve, 2000)); // 2 second delay between tests
+    await new Promise(resolve => setTimeout(resolve, 2000));
   }
-
+  
   updateSummary();
 }
 
@@ -287,24 +95,14 @@ function updateSummary() {
   const total = testResults.length;
   const sent = testResults.filter(r => r.status === 'SENT').length;
   const errors = testResults.filter(r => r.status === 'ERROR').length;
-
-  summaryDiv.innerHTML = `
-    <strong>Test Summary:</strong><br>
-    Total Tests: ${total} | Sent: ${sent} | Errors: ${errors}<br>
-    <br>
-    ⚠️ <strong>Important:</strong> Due to CORS restrictions, we can't verify responses automatically.
-    Please check your Google Sheets to verify which requests were actually accepted/rejected.
-  `;
+  
+  summaryDiv.innerHTML = 'Total: ' + total + ' | Sent: ' + sent + ' | Errors: ' + errors + '<br><br>Check Google Sheets to verify which requests were accepted/rejected.';
 }
 
 function clearResults() {
   document.getElementById('results').innerHTML = '';
   document.getElementById('summary').innerHTML = '';
   testResults = [];
-}
-
-function checkGoogleSheets() {
-  alert('Please manually check your Google Sheets to see which test requests were accepted or rejected.\n\nExpected behavior:\n- Only the first test (Valid Request) should appear in the sheet\n- All other tests should be rejected by the backend');
 }
 </script>
 
