@@ -8,6 +8,9 @@
 <!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Fleur+De+Leah:wght@400;500;600;700&family=Playfair+Display:wght@300;400;500;600&display=swap" rel="stylesheet">
 
+<!-- GSAP Animation Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
 <style>
 :root {
   --primary: #c9a752f3;
@@ -51,11 +54,13 @@ body {
 }
 
 .envelope-container {
-  width: 100vw;
+  max-width: 840px;
+  width: 100%;
   height: 100vh;
   position: relative;
   cursor: pointer;
   pointer-events: auto;
+  margin: 0 auto;
 }
 
 .envelope-flap {
@@ -68,7 +73,6 @@ body {
   clip-path: polygon(0 0, 100% 0, 50% 100%);
   border: 3px solid var(--primary);
   transform-origin: 50% 0;
-  transition: transform 1s ease, opacity 0.5s ease 1s;
   z-index: 3;
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   display: flex;
@@ -128,8 +132,7 @@ body {
 }
 
 .envelope-flap.opened {
-  transform: rotateX(-180deg);
-  opacity: 0;
+  /* Animated by GSAP */
 }
 
 .envelope-body {
@@ -138,7 +141,6 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  transition: transform 1.5s ease 1.5s, opacity 0.5s ease 2.8s;
   z-index: 1;
 }
 
@@ -195,8 +197,7 @@ body {
 }
 
 .envelope-body.opened {
-  transform: translateY(100%);
-  opacity: 0;
+  /* Animated by GSAP */
 }
 
 section {
@@ -474,11 +475,28 @@ footer {
 
 <script>
 function openEnvelope() {
-  document.querySelector('.envelope-flap').classList.add('opened');
-  document.querySelector('.envelope-body').classList.add('opened');
-  setTimeout(() => {
-    document.getElementById('envelopeOverlay').remove();
-  }, 3500);
+  const flap = document.querySelector('.envelope-flap');
+  const body = document.querySelector('.envelope-body');
+  const overlay = document.getElementById('envelopeOverlay');
+  
+  // GSAP Timeline for smooth animations
+  const tl = gsap.timeline();
+  
+  // Open flap with 3D rotation
+  tl.to(flap, {
+    rotationX: -180,
+    transformPerspective: 1000,
+    duration: 1.2,
+    ease: 'power2.inOut'
+  })
+  // Slide envelope body completely off screen
+  .to(body, {
+    y: '100vh',
+    duration: 1.5,
+    ease: 'power2.inOut'
+  }, '-=0.5')
+  // Remove overlay after animation
+  .call(() => overlay.remove());
 }
 </script>
 
