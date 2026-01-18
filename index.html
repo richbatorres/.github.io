@@ -14,7 +14,7 @@
 <style>
 :root {
   --primary: #c9a752f3;
-  --bg: #e1e1b4;
+  --bg: #fafadd;
   --envelope: #d4d4a0;
   --text: #333;
 }
@@ -69,7 +69,7 @@ body {
   left: 0;
   width: 100%;
   height: 50%;
-  background: var(--envelope);
+  background: url('envelope texture.jpg') center/cover;
   clip-path: polygon(0 0, 100% 0, 50% 100%);
   border: 3px solid var(--primary);
   transform-origin: 50% 0;
@@ -141,59 +141,36 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
-}
-
-.envelope-left {
-  position: absolute;
-  left: 0;
-  width: 50%;
-  height: 100%;
-  background: var(--envelope);
-  clip-path: polygon(0 0, 100% 50%, 100% 100%, 0 100%);
+  background: url('envelope texture.jpg') center/cover;
+  clip-path: polygon(0 0, 50% 50%, 100% 0, 100% 100%, 0 100%);
   border: 3px solid var(--primary);
-  border-right: none;
-  box-shadow: -4px 4px 10px rgba(0,0,0,0.15);
+  z-index: 1;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-.envelope-left::before {
+.envelope-body::before,
+.envelope-body::after {
   content: '';
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
+  width: 50%;
   height: 50%;
   border: 2px solid var(--primary);
+  pointer-events: none;
+}
+
+.envelope-body::before {
+  left: 0;
   clip-path: polygon(0 0, 100% 100%, 0 0);
   border-left: none;
   border-bottom: none;
-  pointer-events: none;
 }
 
-.envelope-right {
-  position: absolute;
+.envelope-body::after {
   right: 0;
-  width: 50%;
-  height: 100%;
-  background: var(--envelope);
-  clip-path: polygon(0 50%, 100% 0, 100% 100%, 0 100%);
-  border: 3px solid var(--primary);
-  border-left: none;
-  box-shadow: 4px 4px 10px rgba(0,0,0,0.15);
-}
-
-.envelope-right::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 50%;
-  border: 2px solid var(--primary);
   clip-path: polygon(100% 0, 0 100%, 100% 0);
   border-right: none;
   border-bottom: none;
-  pointer-events: none;
 }
 
 .envelope-body.opened {
@@ -214,7 +191,7 @@ h1 {
   font-family: 'Fleur De Leah', cursive;
   font-size: 100px;
   margin-bottom: 10px;
-  font-weight: 600;
+  font-weight: 200;
 }
 
 h2 {
@@ -450,6 +427,32 @@ footer {
   opacity: 0.7;
   text-align: center;
 }
+
+.countdown {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.countdown-item {
+  text-align: center;
+}
+
+.countdown-number {
+  font-family: 'Fleur De Leah', cursive;
+  font-size: 60px;
+  color: var(--primary);
+  display: block;
+  line-height: 1;
+}
+
+.countdown-label {
+  font-size: 16px;
+  color: var(--text);
+  margin-top: 10px;
+  display: block;
+}
 </style>
 </head>
 
@@ -466,10 +469,7 @@ footer {
         <span class="monogram-t">T</span>
       </div>
     </div>
-    <div class="envelope-body">
-      <div class="envelope-left"></div>
-      <div class="envelope-right"></div>
-    </div>
+    <div class="envelope-body"></div>
   </div>
 </div>
 
@@ -523,6 +523,60 @@ function openEnvelope() {
     </p>
   </div>
 </section>
+
+<!-- COUNTDOWN -->
+<section>
+  <div class="container">
+    <div class="divider"></div>
+    <h2>Do vjenčanja još</h2>
+    <div class="countdown">
+      <div class="countdown-item">
+        <span class="countdown-number" id="days">0</span>
+        <span class="countdown-label">Dana</span>
+      </div>
+      <div class="countdown-item">
+        <span class="countdown-number" id="hours">0</span>
+        <span class="countdown-label">Sati</span>
+      </div>
+      <div class="countdown-item">
+        <span class="countdown-number" id="minutes">0</span>
+        <span class="countdown-label">Minuta</span>
+      </div>
+      <div class="countdown-item">
+        <span class="countdown-number" id="seconds">0</span>
+        <span class="countdown-label">Sekundi</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+function updateCountdown() {
+  const weddingDate = new Date('2026-06-05T15:30:00');
+  const now = new Date();
+  const diff = weddingDate - now;
+  
+  if (diff > 0) {
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    
+    document.getElementById('days').textContent = days;
+    document.getElementById('hours').textContent = hours;
+    document.getElementById('minutes').textContent = minutes;
+    document.getElementById('seconds').textContent = seconds;
+  } else {
+    document.getElementById('days').textContent = '0';
+    document.getElementById('hours').textContent = '0';
+    document.getElementById('minutes').textContent = '0';
+    document.getElementById('seconds').textContent = '0';
+  }
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
 
 <!-- PROGRAM -->
 <section>
