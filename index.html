@@ -6,7 +6,7 @@
 <title>Martina i Tin</title>
 
 <!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Fleur+De+Leah:wght@400;500;600;700&family=Playfair+Display:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oooh+Baby&family=Playfair+Display:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <!-- GSAP Animation Library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -38,6 +38,66 @@ body {
   background: var(--bg);
   border: 1px solid var(--primary);
   box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.page-wrapper::before,
+.page-wrapper::after {
+  content: '';
+  position: absolute;
+  width: 375px;
+  height: 375px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  opacity: 0.8;
+  z-index: 10;
+}
+
+.page-wrapper::before {
+  top: 0;
+  right: 0;
+  background-image: url('floral corner desno gore.png');
+}
+
+.page-wrapper::after {
+  bottom: 0;
+  left: 0;
+  background-image: url('floral corner lijevo dolje.png');
+}
+
+.corner-line {
+  position: absolute;
+  background: var(--primary);
+  z-index: 5;
+}
+
+.corner-line-top-left-h {
+  top: 30px;
+  left: 30px;
+  width: 350px;
+  height: 2px;
+}
+
+.corner-line-top-left-v {
+  top: 30px;
+  left: 30px;
+  width: 2px;
+  height: 350px;
+}
+
+.corner-line-bottom-right-h {
+  bottom: 30px;
+  right: 30px;
+  width: 350px;
+  height: 2px;
+}
+
+.corner-line-bottom-right-v {
+  bottom: 30px;
+  right: 30px;
+  width: 2px;
+  height: 350px;
 }
 
 .envelope-overlay {
@@ -107,7 +167,7 @@ body {
 }
 
 .monogram {
-  font-family: 'Fleur De Leah', cursive;
+  font-family: 'Oooh Baby', cursive;
   font-size: 48px;
   color: var(--primary);
   display: flex;
@@ -178,7 +238,7 @@ body {
 }
 
 section {
-  padding: 60px 20px;
+  padding: 120px 20px;
 }
 
 .container {
@@ -188,14 +248,14 @@ section {
 }
 
 h1 {
-  font-family: 'Fleur De Leah', cursive;
+  font-family: 'Oooh Baby', cursive;
   font-size: 100px;
   margin-bottom: 10px;
   font-weight: 200;
 }
 
 h2 {
-  font-family: 'Fleur De Leah', cursive;
+  font-family: 'Oooh Baby', cursive;
   font-weight: 500;
   font-size: 70px;
   margin-top: 0;
@@ -422,7 +482,7 @@ iframe {
 }
 
 footer {
-  padding: 40px 20px;
+  padding: 40px 20px 190px 20px;
   font-size: 14px;
   opacity: 0.7;
   text-align: center;
@@ -440,7 +500,7 @@ footer {
 }
 
 .countdown-number {
-  font-family: 'Fleur De Leah', cursive;
+  font-family: 'Oooh Baby', cursive;
   font-size: 60px;
   color: var(--primary);
   display: block;
@@ -459,6 +519,11 @@ footer {
 <body>
 
 <div class="page-wrapper">
+
+<div class="corner-line corner-line-top-left-h"></div>
+<div class="corner-line corner-line-top-left-v"></div>
+<div class="corner-line corner-line-bottom-right-h"></div>
+<div class="corner-line corner-line-bottom-right-v"></div>
 
 <div class="envelope-overlay" id="envelopeOverlay">
   <div class="envelope-container" onclick="openEnvelope()">
@@ -508,7 +573,7 @@ function openEnvelope() {
     <div class="divider"></div>
 
     <!-- VAŠA SLIKA -->
-    <img src="zaruke anime.png"
+    <img src="zaruke line art.png"
          alt="Naša slika"
          class="hero-img">
   </div>
@@ -801,9 +866,11 @@ document.getElementById('rsvpForm').addEventListener('submit', async function(e)
 });
 </script>
 
-<h2>
-  Veselimo se vašem dolasku 🤍
-</h2>
+<footer>
+  <h2 style="margin: 0;">
+    Veselimo se vašem dolasku 🤍
+  </h2>
+</footer>
 
 </div>
 
