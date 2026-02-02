@@ -6,7 +6,7 @@
 <title>Martina i Tin</title>
 
 <!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Oooh+Baby&family=Playfair+Display:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Allison&family=Playfair+Display:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <!-- GSAP Animation Library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -184,7 +184,7 @@ body {
 }
 
 .monogram {
-  font-family: 'Oooh Baby', cursive;
+  font-family: 'Allison', cursive;
   font-size: 48px;
   color: var(--primary);
   display: flex;
@@ -271,14 +271,14 @@ section {
 }
 
 h1 {
-  font-family: 'Oooh Baby', cursive;
+  font-family: 'Allison', cursive;
   font-size: clamp(50px, 12vw, 100px);
   margin-bottom: 10px;
   font-weight: 200;
 }
 
 h2 {
-  font-family: 'Oooh Baby', cursive;
+  font-family: 'Allison', cursive;
   font-weight: 500;
   font-size: clamp(40px, 9vw, 70px);
   margin-top: 0;
@@ -529,7 +529,7 @@ footer {
 }
 
 .countdown-number {
-  font-family: 'Oooh Baby', cursive;
+  font-family: 'Allison', cursive;
   font-size: clamp(40px, 8vw, 60px);
   color: var(--primary);
   display: block;
@@ -546,6 +546,13 @@ footer {
 </head>
 
 <body>
+
+<script>
+if (history.scrollRestoration) {
+  history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+</script>
 
 <div class="page-wrapper">
 
@@ -598,7 +605,6 @@ function openEnvelope() {
 <section>
   <div class="container">
     <h1>Martina & Tin</h1>
-    <h2>Vjenčanje</h2>
     <div class="divider"></div>
 
     <!-- VAŠA SLIKA -->
@@ -898,8 +904,9 @@ document.getElementById('rsvpForm').addEventListener('submit', async function(e)
 <footer>
   <div class="divider"></div>
   <h2 style="margin: 0;">
-    Veselimo se vašem dolasku 🤍
+    Veselimo se vašem dolasku 
   </h2>
+  <h2>🤍</h2>
 </footer>
 
 </div>
