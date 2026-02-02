@@ -29,7 +29,7 @@ body {
   background: #fff;
   color: var(--text);
   overflow-x: hidden;
-  padding: 40px 20px;
+  padding: 2.5vw;
 }
 
 .page-wrapper {
@@ -45,8 +45,11 @@ body {
 .page-wrapper::after {
   content: '';
   position: absolute;
-  width: 375px;
-  height: 375px;
+  width: 47%;
+  height: auto;
+  aspect-ratio: 1;
+  max-width: 375px;
+  max-height: 375px;
   background-size: contain;
   background-repeat: no-repeat;
   pointer-events: none;
@@ -73,31 +76,35 @@ body {
 }
 
 .corner-line-top-left-h {
-  top: 30px;
-  left: 30px;
-  width: 350px;
-  height: 2px;
+  top: 0.5%;
+  left: 3%;
+  width: 20%;
+  max-width: 350px;
+  height: 3px;
 }
 
 .corner-line-top-left-v {
-  top: 30px;
-  left: 30px;
-  width: 2px;
-  height: 350px;
+  top: 0.5%;
+  left: 3%;
+  width: 3px;
+  height: 74%;
+  max-height: 350px;
 }
 
 .corner-line-bottom-right-h {
-  bottom: 30px;
-  right: 30px;
-  width: 350px;
-  height: 2px;
+  bottom: 0.5%;
+  right: 3%;
+  width: 20%;
+  max-width: 350px;
+  height: 3px;
 }
 
 .corner-line-bottom-right-v {
-  bottom: 30px;
-  right: 30px;
-  width: 2px;
-  height: 350px;
+  bottom: 0.5%;
+  right: 3%;
+  width: 3px;
+  height: 74%;
+  max-height: 350px;
 }
 
 .envelope-overlay {
@@ -238,7 +245,13 @@ body {
 }
 
 section {
-  padding: 120px 20px;
+  padding: 15vw 5vw;
+}
+
+@media (min-width: 768px) {
+  section {
+    padding: 120px 20px;
+  }
 }
 
 .container {
@@ -249,7 +262,7 @@ section {
 
 h1 {
   font-family: 'Oooh Baby', cursive;
-  font-size: 100px;
+  font-size: clamp(50px, 12vw, 100px);
   margin-bottom: 10px;
   font-weight: 200;
 }
@@ -257,7 +270,7 @@ h1 {
 h2 {
   font-family: 'Oooh Baby', cursive;
   font-weight: 500;
-  font-size: 70px;
+  font-size: clamp(40px, 9vw, 70px);
   margin-top: 0;
   text-align: center;
 }
@@ -482,10 +495,16 @@ iframe {
 }
 
 footer {
-  padding: 40px 20px 190px 20px;
+  padding: 40px 20px 24vw 20px;
   font-size: 14px;
   opacity: 0.7;
   text-align: center;
+}
+
+@media (min-width: 768px) {
+  footer {
+    padding: 40px 20px 190px 20px;
+  }
 }
 
 .countdown {
@@ -501,7 +520,7 @@ footer {
 
 .countdown-number {
   font-family: 'Oooh Baby', cursive;
-  font-size: 60px;
+  font-size: clamp(40px, 8vw, 60px);
   color: var(--primary);
   display: block;
   line-height: 1;
