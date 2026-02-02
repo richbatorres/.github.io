@@ -87,8 +87,13 @@ body {
   top: 0.5%;
   left: 3%;
   width: 3px;
-  height: 74%;
-  max-height: 350px;
+  height: 20vw;
+}
+
+@media (min-width: 768px) {
+  .corner-line-top-left-v {
+    height: 160px;
+  }
 }
 
 .corner-line-bottom-right-h {
@@ -103,8 +108,13 @@ body {
   bottom: 0.5%;
   right: 3%;
   width: 3px;
-  height: 74%;
-  max-height: 350px;
+  height: 20vw;
+}
+
+@media (min-width: 768px) {
+  .corner-line-bottom-right-v {
+    height: 160px;
+  }
 }
 
 .envelope-overlay {
@@ -886,6 +896,7 @@ document.getElementById('rsvpForm').addEventListener('submit', async function(e)
 </script>
 
 <footer>
+  <div class="divider"></div>
   <h2 style="margin: 0;">
     Veselimo se vašem dolasku 🤍
   </h2>
