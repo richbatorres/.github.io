@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Martina i Tin</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Allison&family=Playfair+Display:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- GSAP Animation Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<style>
+:root {
+  --primary: #c9a752f3;
+  --bg: #fafadd;
+  --envelope: #d4d4a0;
+  --text: #333;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  background: #fff;
+  color: var(--text);
+  overflow-x: hidden;
+  padding: 2.5vw;
+}
+
+.page-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  background: var(--bg);
+  border: 1px solid var(--primary);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.page-wrapper::before,
+.page-wrapper::after {
+  content: '';
+  position: absolute;
+  width: 47%;
+  height: auto;
+  aspect-ratio: 1;
+  max-width: 375px;
+  max-height: 375px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  opacity: 0.8;
+  z-index: 10;
+}
+
+.page-wrapper::before {
+  top: 0;
+  right: 0;
+  background-image: url('floral corner desno gore.png');
+}
+
+.page-wrapper::after {
+  bottom: 0;
+  left: 0;
+  background-image: url('floral corner lijevo dolje.png');
+}
+
+.corner-line {
+  position: absolute;
+  background: var(--primary);
+  z-index: 5;
+}
+
+.corner-line-top-left-h {
+  top: 0.5%;
+  left: 3%;
+  width: 20%;
+  max-width: 350px;
+  height: 3px;
+}
+
+.corner-line-top-left-v {
+  top: 0.5%;
+  left: 3%;
+  width: 3px;
+  height: 20vw;
+}
+
+@media (min-width: 768px) {
+  .corner-line-top-left-v {
+    height: 160px;
+  }
+}
+
+.corner-line-bottom-right-h {
+  bottom: 0.5%;
+  right: 3%;
+  width: 20%;
+  max-width: 350px;
+  height: 3px;
+}
+
+.corner-line-bottom-right-v {
+  bottom: 0.5%;
+  right: 3%;
+  width: 3px;
+  height: 20vw;
+}
+
+@media (min-width: 768px) {
+  .corner-line-bottom-right-v {
+    height: 160px;
+  }
+}
+
+.envelope-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.envelope-container {
+  max-width: 840px;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  cursor: pointer;
+  pointer-events: auto;
+  margin: 0 auto;
+}
+
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: url('envelope texture.jpg') center/cover;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  border: 3px solid var(--primary);
+  transform-origin: 50% 0;
+  z-index: 3;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 0;
+}
+
+.envelope-flap::before,
+.envelope-flap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  border: 2px solid var(--primary);
+  pointer-events: none;
+}
+
+.envelope-flap::before {
+  left: 0;
+  clip-path: polygon(0 0, 100% 100%, 0 0);
+  border-right: none;
+  border-bottom: none;
+}
+
+.envelope-flap::after {
+  right: 0;
+  clip-path: polygon(100% 0, 0 100%, 100% 0);
+  border-left: none;
+  border-bottom: none;
+}
+
+.monogram {
+  font-family: 'Allison', cursive;
+  font-size: 48px;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.monogram-divider {
+  width: 1px;
+  height: 80px;
+  background: var(--primary);
+  margin: 0 24px 0 16px;
+  transform: translateX(-10px);
+}
+
+.monogram-m {
+  transform: translateX(-15px);
+}
+
+.monogram-t {
+  transform: translateX(-15px);
+}
+
+.envelope-flap.opened {
+  /* Animated by GSAP */
+}
+
+.envelope-body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('envelope texture.jpg') center/cover;
+  clip-path: polygon(0 0, 50% 50%, 100% 0, 100% 100%, 0 100%);
+  border: 3px solid var(--primary);
+  z-index: 1;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.envelope-body::before,
+.envelope-body::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 50%;
+  border: 2px solid var(--primary);
+  pointer-events: none;
+}
+
+.envelope-body::before {
+  left: 0;
+  clip-path: polygon(0 0, 100% 100%, 0 0);
+  border-left: none;
+  border-bottom: none;
+}
+
+.envelope-body::after {
+  right: 0;
+  clip-path: polygon(100% 0, 0 100%, 100% 0);
+  border-right: none;
+  border-bottom: none;
+}
+
+.envelope-body.opened {
+  /* Animated by GSAP */
+}
+
+section {
+  padding: 15vw 5vw;
+}
+
+@media (min-width: 768px) {
+  section {
+    padding: 120px 20px;
+  }
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  text-align: center;
+}
+
+h1 {
+  font-family: 'Allison', cursive;
+  font-size: clamp(50px, 12vw, 100px);
+  margin-bottom: 10px;
+  font-weight: 200;
+}
+
+h2 {
+  font-family: 'Allison', cursive;
+  font-weight: 500;
+  font-size: clamp(40px, 9vw, 70px);
+  margin-top: 0;
+  text-align: center;
+}
+
+.divider {
+  width: 60px;
+  height: 3px;
+  background: var(--primary);
+  margin: 30px auto;
+}
+
+.hero-img {
+  width: 100%;
+  border-radius: 18px;
+  margin-top: 30px;
+}
+
+.info p {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.program-timeline {
+  margin-top: 40px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.timeline-time {
+  min-width: 120px;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text);
+  padding-top: 2px;
+}
+
+.timeline-divider {
+  width: 2px;
+  background: var(--primary);
+  flex-shrink: 0;
+}
+
+.timeline-content {
+  flex: 1;
+  padding-bottom: 10px;
+}
+
+.timeline-activity {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: var(--text);
+}
+
+.timeline-location {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+.timeline-location a {
+  color: #666;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.timeline-location a:hover {
+  color: var(--primary);
+}
+
+.timeline-location a::after {
+  content: '→';
+  font-size: 14px;
+}
+
+iframe {
+  width: 100%;
+  border: none;
+  border-radius: 16px;
+}
+
+.rsvp-form {
+  max-width: 500px;
+  margin: 40px auto;
+  text-align: left;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-label {
+  display: block;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text);
+  transition: border-color 0.3s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(201, 167, 82, 0.1);
+}
+
+.form-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.guest-list {
+  margin-top: 15px;
+}
+
+.guest-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.guest-item input {
+  flex: 1;
+}
+
+.btn-remove {
+  padding: 8px 12px;
+  background: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.btn-remove:hover {
+  background: #c9302c;
+}
+
+.btn-add {
+  padding: 10px 20px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: 'Playfair Display', serif;
+  transition: background 0.3s;
+  margin-top: 10px;
+}
+
+.btn-add:hover {
+  background: #b8964a;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 15px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  transition: background 0.3s;
+  margin-top: 20px;
+}
+
+.btn-submit:hover {
+  background: #b8964a;
+}
+
+.btn-submit:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.form-message {
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.form-message.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.form-message.error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+footer {
+  padding: 40px 20px 24vw 20px;
+  font-size: 14px;
+  opacity: 0.7;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  footer {
+    padding: 40px 20px 190px 20px;
+  }
+}
+
+.countdown {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.countdown-item {
+  text-align: center;
+}
+
+.countdown-number {
+  font-family: 'Allison', cursive;
+  font-size: clamp(40px, 8vw, 60px);
+  color: var(--primary);
+  display: block;
+  line-height: 1;
+}
+
+.countdown-label {
+  font-size: 16px;
+  color: var(--text);
+  margin-top: 10px;
+  display: block;
+}
+</style>
+</head>
+
+<body>
+
+<script>
+if (history.scrollRestoration) {
+  history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+</script>
+
+<div class="page-wrapper">
+
+<div class="corner-line corner-line-top-left-h"></div>
+<div class="corner-line corner-line-top-left-v"></div>
+<div class="corner-line corner-line-bottom-right-h"></div>
+<div class="corner-line corner-line-bottom-right-v"></div>
+
+<div class="envelope-overlay" id="envelopeOverlay">
+  <div class="envelope-container" onclick="openEnvelope()">
+    <div class="envelope-flap">
+      <div class="monogram">
+        <span class="monogram-m">M</span>
+        <div class="monogram-divider"></div>
+        <span class="monogram-t">T</span>
+      </div>
+    </div>
+    <div class="envelope-body"></div>
+  </div>
+</div>
+
+<script>
+function openEnvelope() {
+  const flap = document.querySelector('.envelope-flap');
+  const body = document.querySelector('.envelope-body');
+  const overlay = document.getElementById('envelopeOverlay');
+  
+  // GSAP Timeline for smooth animations
+  const tl = gsap.timeline();
+  
+  // Open flap with 3D rotation
+  tl.to(flap, {
+    rotationX: -180,
+    transformPerspective: 1000,
+    duration: 1.2,
+    ease: 'power2.inOut'
+  })
+  // Slide envelope body completely off screen
+  .to(body, {
+    y: '100vh',
+    duration: 1.5,
+    ease: 'power2.inOut'
+  }, '-=0.5')
+  // Remove overlay after animation
+  .call(() => overlay.remove());
+}
+</script>
+
+<!-- HERO -->
+<section>
+  <div class="container">
+    <h1>Martina & Tin</h1>
+    <div class="divider"></div>
+
+    <!-- VAŠA SLIKA -->
+    <img src="zaruke line art.png"
+         alt="Naša slika"
+         class="hero-img">
+  </div>
+</section>
+
+<!-- INFO -->
+<section>
+  <div class="container info">
+    <div class="divider"></div>
+    <p>
+      S velikom radošću vas pozivamo da zajedno s nama
+      proslavite dan našeg vjenčanja.
+    </p>
+  </div>
+</section>
+
+<!-- COUNTDOWN -->
+<section>
+  <div class="container">
+    <div class="divider"></div>
+    <h2>Do vjenčanja još</h2>
+    <div class="countdown">
+      <div class="countdown-item">
+        <span class="countdown-number" id="days">0</span>
+        <span class="countdown-label">Dana</span>
+      </div>
+      <div class="countdown-item">
+        <span class="countdown-number" id="hours">0</span>
+        <span class="countdown-label">Sati</span>
+      </div>
+      <div class="countdown-item">
+        <span class="countdown-number" id="minutes">0</span>
+        <span class="countdown-label">Minuta</span>
+      </div>
+      <div class="countdown-item">
+        <span class="countdown-number" id="seconds">0</span>
+        <span class="countdown-label">Sekundi</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+function updateCountdown() {
+  const weddingDate = new Date('2026-06-05T15:30:00');
+  const now = new Date();
+  const diff = weddingDate - now;
+  
+  if (diff > 0) {
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    
+    document.getElementById('days').textContent = days;
+    document.getElementById('hours').textContent = hours;
+    document.getElementById('minutes').textContent = minutes;
+    document.getElementById('seconds').textContent = seconds;
+  } else {
+    document.getElementById('days').textContent = '0';
+    document.getElementById('hours').textContent = '0';
+    document.getElementById('minutes').textContent = '0';
+    document.getElementById('seconds').textContent = '0';
+  }
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
+
+<!-- PROGRAM -->
+<section>
+  <div class="container">
+    <h2>5. lipnja 2026.</h2>
+    <div class="divider"></div>
+
+      <div class="timeline-item">
+        <div class="timeline-time">14:00 - 15:20</div>
+        <div class="timeline-divider"></div>
+        <div class="timeline-content">
+          <div class="timeline-activity">Okupljanje gostiju</div>
+          <p class="timeline-location"><a href="https://maps.app.goo.gl/nRhkPvaDGsdz4f7i9" target="_blank">Caffe bar The Brick</a></p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-time">15:30 - 16:00</div>
+        <div class="timeline-divider"></div>
+        <div class="timeline-content">
+          <div class="timeline-activity">Crkvena ceremonija</div>
+          <p class="timeline-location"><a href="https://maps.app.goo.gl/JBX9p9scsCBmUMfR7" target="_blank">Crkva sv. Roka</a></p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-time">17:00 - 19:00</div>
+        <div class="timeline-divider"></div>
+        <div class="timeline-content">
+          <div class="timeline-activity">Još jedno okupljanje</div>
+          <p class="timeline-location"><a href="https://maps.app.goo.gl/dS3m1niK7LdJ7DLW8" target="_blank">Sala Vile Bilogore</a></p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-time">19:00 - 04:00</div>
+        <div class="timeline-divider"></div>
+        <div class="timeline-content">
+          <div class="timeline-activity">Večera & fešta</div>
+        </div>
+      </div>
+  </div>
+  <div class="container info">
+    <p>
+      *Organiziran je prijevoz kombijem iz sale do smještaja koji cijelu noć stoji na raspolaganju gostima.
+    </p>
+  </div>
+</section>
+
+<!-- MAPS -->
+<section>
+  <div class="container">
+    <h2>Planirane rute</h2>
+    <div class="divider"></div>
+
+    <!-- GOOGLE MAPS EMBED -->
+    <iframe src="https://www.google.com/maps/embed?pb=!1m34!1m12!1m3!1d76294.90491335663!2d17.2570533187974!3d45.77534088410987!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m19!3e0!4m5!1s0x4767ebe5aa80915b%3A0xc58eb3a1b822be9f!2sCaffe%20bar%20The%20BRICK%2C%20Trg%20kralja%20Zvonimira%201%2C%2033000%2C%20Virovitica!3m2!1d45.834400099999996!2d17.3839969!4m5!1s0x4767ea9e261b429d%3A0xa54253f2e22750a3!2sChurch%20of%20St.%20Roch%2C%20Trg%20kralja%20Zvonimira%208%2C%2033000%2C%20Virovitica!3m2!1d45.835170399999996!2d17.383918299999998!4m5!1s0x47679617c60c6cad%3A0x756bc4cf85e79377!2sVila%20Bilogore%2C%20Mala%20Dap%C4%8Devica%2044%2C%2043504%2C%20Mala%20Dap%C4%8Devica!3m2!1d45.715571499999996!2d17.2973642!5e1!3m2!1sen!2shr!4v1770056722031!5m2!1sen!2shr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</section>
+
+<!-- RSVP -->
+<section>
+  <div class="container">
+    <h2>Potvrda dolaska</h2>
+    <div class="divider"></div>
+
+    <form class="rsvp-form" id="rsvpForm">
+      <!-- Honeypot field (hidden from users, catches bots) -->
+      <input type="text" name="website" id="website" style="display:none" tabindex="-1" autocomplete="off">
+      
+      <div class="form-group">
+        <label class="form-label">Imena i prezimena gostiju *</label>
+        <div class="guest-list" id="guestList">
+          <div class="guest-item">
+            <input type="text" class="form-input" placeholder="Ime i prezime" required maxlength="100">
+          </div>
+        </div>
+        <button type="button" class="btn-add" onclick="addGuest()">+ Dodaj gosta</button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Napomena (prehrambena ograničenja, poruka, itd.)</label>
+        <textarea class="form-input form-textarea" id="notes" placeholder="Unesite napomenu..." maxlength="500"></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submitBtn">Pošalji potvrdu</button>
+      <div id="formMessage"></div>
+    </form>
+  </div>
+</section>
+
+<script>
+let lastSubmitTime = 0;
+
+function addGuest() {
+  const guestList = document.getElementById('guestList');
+  const currentGuests = guestList.querySelectorAll('.guest-item').length;
+  
+  // Limit max 10 guests
+  if (currentGuests >= 10) {
+    alert('Maksimalan broj gostiju je 10.');
+    return;
+  }
+  
+  const guestItem = document.createElement('div');
+  guestItem.className = 'guest-item';
+  guestItem.innerHTML = `
+    <input type="text" class="form-input" placeholder="Ime i prezime" required maxlength="100">
+    <button type="button" class="btn-remove" onclick="removeGuest(this)">✕</button>
+  `;
+  guestList.appendChild(guestItem);
+}
+
+function removeGuest(btn) {
+  btn.parentElement.remove();
+}
+
+function sanitizeInput(input) {
+  return input.replace(/<[^>]*>/g, '').trim();
+}
+
+document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  
+  const submitBtn = document.getElementById('submitBtn');
+  const messageDiv = document.getElementById('formMessage');
+  
+  // Rate limiting - prevent multiple submissions within 30 seconds
+  const now = Date.now();
+  if (now - lastSubmitTime < 30000) {
+    messageDiv.innerHTML = '<div class="form-message error">Molimo pričekajte 30 sekundi prije ponovnog slanja.</div>';
+    return;
+  }
+  
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Šaljem...';
+  messageDiv.innerHTML = '';
+  
+  // Check honeypot
+  const honeypot = document.getElementById('website').value;
+  if (honeypot) {
+    messageDiv.innerHTML = '<div class="form-message error">Greška pri slanju.</div>';
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Pošalji potvrdu';
+    return;
+  }
+  
+  const guestInputs = document.querySelectorAll('.guest-item input');
+  const guests = Array.from(guestInputs)
+    .map(input => sanitizeInput(input.value))
+    .filter(val => val);
+  const notes = sanitizeInput(document.getElementById('notes').value);
+  
+  if (guests.length === 0) {
+    messageDiv.innerHTML = '<div class="form-message error">Molimo unesite barem jednog gosta.</div>';
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Pošalji potvrdu';
+    return;
+  }
+  
+  try {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbxxpHO8vjFa-9op2_Hdbm46cfDR5Mm-tfeKghGJTmKm7WYJ2RZQXdwL7ASrEibmsXmA/exec', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        guests: guests,
+        notes: notes,
+        timestamp: new Date().toISOString(),
+        website: honeypot
+      })
+    });
+    
+    lastSubmitTime = now;
+    messageDiv.innerHTML = '<div class="form-message success">Hvala! Vaša potvrda je uspješno poslana. 🤍</div>';
+    document.getElementById('rsvpForm').reset();
+    document.getElementById('guestList').innerHTML = '<div class="guest-item"><input type="text" class="form-input" placeholder="Ime i prezime" required maxlength="100"></div>';
+    
+  } catch (error) {
+    messageDiv.innerHTML = '<div class="form-message error">Došlo je do greške. Molimo pokušajte ponovno.</div>';
+  }
+  
+  submitBtn.disabled = false;
+  submitBtn.textContent = 'Pošalji potvrdu';
+});
+</script>
+
+<footer>
+  <h2 style="margin: 0;">
+    Veselimo se vašem dolasku 
+  </h2>
+  <h2>🤍</h2>
+</footer>
+
+</div>
+
+</body>
+</html>

@@ -1,2 +1,2 @@
 # .github.io
-Pozivnice za vjenčanje za našu svadnu 5.6.2026.
+Pozivnice za vjenčanje za našu svadbu 5.6.2026.
