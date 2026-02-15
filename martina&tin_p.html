@@ -109,20 +109,10 @@ body {
   color: var(--primary);
   display: flex;
   align-items: center;
-  gap: 0;
-}
-
-.monogram-divider {
-  font-family: 'Allison', cursive;
-  font-size: clamp(100px, 20vw, 200px);
-  color: var(--primary);
-  margin: 0 clamp(20px, 4vw, 40px);
+  justify-content: center;
   line-height: 1;
-}
-
-.monogram-m,
-.monogram-t {
-  line-height: 1;
+  gap: clamp(10px, 3vw, 30px);
+  margin-right: 10vw;
 }
 
 section {
@@ -483,11 +473,7 @@ window.scrollTo(0, 0);
 <div class="corner-line corner-line-bottom-right-v"></div>
 
 <div class="envelope-overlay" id="envelopeOverlay" onclick="openEnvelope()">
-  <div class="monogram">
-    <span class="monogram-m">M</span>
-    <span class="monogram-divider">&</span>
-    <span class="monogram-t">T</span>
-  </div>
+  <div class="monogram">M & T</div>
 </div>
 
 <script>
