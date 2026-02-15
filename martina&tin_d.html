@@ -95,69 +95,17 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
+  background: var(--bg);
   z-index: 9999;
-  pointer-events: none;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.envelope-container {
-  max-width: 840px;
-  width: 100%;
-  height: 100vh;
-  position: relative;
   cursor: pointer;
-  pointer-events: auto;
-  margin: 0 auto;
-}
-
-.envelope-flap {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 50%;
-  background: url('envelope texture.jpg') center/cover;
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
-  border: 3px solid var(--primary);
-  transform-origin: 50% 0;
-  z-index: 3;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 0;
-}
-
-.envelope-flap::before,
-.envelope-flap::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  border: 2px solid var(--primary);
-  pointer-events: none;
-}
-
-.envelope-flap::before {
-  left: 0;
-  clip-path: polygon(0 0, 100% 100%, 0 0);
-  border-right: none;
-  border-bottom: none;
-}
-
-.envelope-flap::after {
-  right: 0;
-  clip-path: polygon(100% 0, 0 100%, 100% 0);
-  border-left: none;
-  border-bottom: none;
 }
 
 .monogram {
   font-family: 'Allison', cursive;
-  font-size: 48px;
+  font-size: clamp(120px, 25vw, 250px);
   color: var(--primary);
   display: flex;
   align-items: center;
@@ -165,65 +113,16 @@ body {
 }
 
 .monogram-divider {
-  width: 1px;
-  height: 80px;
-  background: var(--primary);
-  margin: 0 24px 0 16px;
-  transform: translateX(-10px);
+  font-family: 'Allison', cursive;
+  font-size: clamp(100px, 20vw, 200px);
+  color: var(--primary);
+  margin: 0 clamp(20px, 4vw, 40px);
+  line-height: 1;
 }
 
-.monogram-m {
-  transform: translateX(-15px);
-}
-
+.monogram-m,
 .monogram-t {
-  transform: translateX(-15px);
-}
-
-.envelope-flap.opened {
-  /* Animated by GSAP */
-}
-
-.envelope-body {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('envelope texture.jpg') center/cover;
-  clip-path: polygon(0 0, 50% 50%, 100% 0, 100% 100%, 0 100%);
-  border: 3px solid var(--primary);
-  z-index: 1;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-}
-
-.envelope-body::before,
-.envelope-body::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  width: 50%;
-  height: 50%;
-  border: 2px solid var(--primary);
-  pointer-events: none;
-}
-
-.envelope-body::before {
-  left: 0;
-  clip-path: polygon(0 0, 100% 100%, 0 0);
-  border-left: none;
-  border-bottom: none;
-}
-
-.envelope-body::after {
-  right: 0;
-  clip-path: polygon(100% 0, 0 100%, 100% 0);
-  border-right: none;
-  border-bottom: none;
-}
-
-.envelope-body.opened {
-  /* Animated by GSAP */
+  line-height: 1;
 }
 
 section {
@@ -282,11 +181,13 @@ h1 {
   color: white;
   margin: 0;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  opacity: 0;
 }
 
 .hero-content .divider {
   background: white;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  opacity: 0;
 }
 
 .hero-date {
@@ -296,6 +197,7 @@ h1 {
   margin-top: 20px;
   font-weight: 400;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  opacity: 0;
 }
 
 h2 {
@@ -580,43 +482,31 @@ window.scrollTo(0, 0);
 <div class="corner-line corner-line-bottom-right-h"></div>
 <div class="corner-line corner-line-bottom-right-v"></div>
 
-<div class="envelope-overlay" id="envelopeOverlay">
-  <div class="envelope-container" onclick="openEnvelope()">
-    <div class="envelope-flap">
-      <div class="monogram">
-        <span class="monogram-m">M</span>
-        <div class="monogram-divider"></div>
-        <span class="monogram-t">T</span>
-      </div>
-    </div>
-    <div class="envelope-body"></div>
+<div class="envelope-overlay" id="envelopeOverlay" onclick="openEnvelope()">
+  <div class="monogram">
+    <span class="monogram-m">M</span>
+    <span class="monogram-divider">&</span>
+    <span class="monogram-t">T</span>
   </div>
 </div>
 
 <script>
 function openEnvelope() {
-  const flap = document.querySelector('.envelope-flap');
-  const body = document.querySelector('.envelope-body');
   const overlay = document.getElementById('envelopeOverlay');
-  
-  // GSAP Timeline for smooth animations
-  const tl = gsap.timeline();
-  
-  // Open flap with 3D rotation
-  tl.to(flap, {
-    rotationX: -180,
-    transformPerspective: 1000,
-    duration: 1.2,
-    ease: 'power2.inOut'
-  })
-  // Slide envelope body completely off screen
-  .to(body, {
-    y: '100vh',
-    duration: 1.5,
-    ease: 'power2.inOut'
-  }, '-=0.5')
-  // Remove overlay after animation
-  .call(() => overlay.remove());
+  gsap.to(overlay, {
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power2.inOut',
+    onComplete: () => {
+      overlay.remove();
+      // Animacija teksta na hero slici nakon pola sekunde
+      setTimeout(() => {
+        gsap.to('.hero-content h1', { opacity: 1, duration: 1, ease: 'power2.out' });
+        gsap.to('.hero-content .divider', { opacity: 1, duration: 1, delay: 0.3, ease: 'power2.out' });
+        gsap.to('.hero-date', { opacity: 1, duration: 1, delay: 0.6, ease: 'power2.out' });
+      }, 500);
+    }
+  });
 }
 </script>
 
