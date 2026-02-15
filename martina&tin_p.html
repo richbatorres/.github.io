@@ -44,7 +44,6 @@ body {
   position: relative;
 }
 
-.page-wrapper::before,
 .page-wrapper::after {
   content: '';
   position: absolute;
@@ -58,15 +57,6 @@ body {
   pointer-events: none;
   opacity: 0.8;
   z-index: 10;
-}
-
-.page-wrapper::before {
-  top: 0;
-  right: 0;
-  background-image: url('floral corner desno gore.png');
-}
-
-.page-wrapper::after {
   bottom: 0;
   left: 0;
   background-image: url('floral corner lijevo dolje.png');
@@ -76,27 +66,6 @@ body {
   position: absolute;
   background: var(--primary);
   z-index: 5;
-}
-
-.corner-line-top-left-h {
-  top: 0.5%;
-  left: 3%;
-  width: 20%;
-  max-width: 350px;
-  height: 3px;
-}
-
-.corner-line-top-left-v {
-  top: 0.5%;
-  left: 3%;
-  width: 3px;
-  height: 20vw;
-}
-
-@media (min-width: 768px) {
-  .corner-line-top-left-v {
-    height: 160px;
-  }
 }
 
 .corner-line-bottom-right-h {
@@ -278,6 +247,47 @@ h1 {
   font-size: clamp(50px, 12vw, 100px);
   margin-bottom: 10px;
   font-weight: 200;
+}
+
+.hero-section {
+  padding: 0;
+  position: relative;
+}
+
+.hero-background {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hero-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+  z-index: 2;
+}
+
+.hero-content h1 {
+  color: white;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.hero-content .divider {
+  background: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.hero-date {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(18px, 4vw, 24px);
+  color: white;
+  margin-top: 20px;
+  font-weight: 400;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
 h2 {
@@ -559,8 +569,6 @@ window.scrollTo(0, 0);
 
 <div class="page-wrapper">
 
-<div class="corner-line corner-line-top-left-h"></div>
-<div class="corner-line corner-line-top-left-v"></div>
 <div class="corner-line corner-line-bottom-right-h"></div>
 <div class="corner-line corner-line-bottom-right-v"></div>
 
@@ -605,15 +613,12 @@ function openEnvelope() {
 </script>
 
 <!-- HERO -->
-<section>
-  <div class="container">
+<section class="hero-section">
+  <img src="pozivnica_naslovna1_uredeno.jpg" alt="Martina & Tin" class="hero-background">
+  <div class="hero-content">
     <h1>Martina & Tin</h1>
     <div class="divider"></div>
-
-    <!-- VAŠA SLIKA -->
-    <img src="zaruke line art.png"
-         alt="Naša slika"
-         class="hero-img">
+    <p class="hero-date">5.6.2026.</p>
   </div>
 </section>
 
