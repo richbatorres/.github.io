@@ -172,6 +172,7 @@ h1 {
   margin: 0;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
   opacity: 0;
+  font-size: clamp(75px, 18vw, 150px);
 }
 
 .hero-content .divider {
@@ -182,7 +183,7 @@ h1 {
 
 .hero-date {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(18px, 4vw, 24px);
+  font-size: clamp(27px, 6vw, 36px);
   color: white;
   margin-top: 20px;
   font-weight: 400;
@@ -579,7 +580,7 @@ setInterval(updateCountdown, 1000);
 
     <div class="program-timeline">
       <div class="timeline-item">
-        <div class="timeline-time">13:30</div>
+        <div class="timeline-time">14:00</div>
         <div class="timeline-divider"></div>
         <div class="timeline-content">
           <div class="timeline-activity">Check in u hotelu</div>
@@ -625,7 +626,7 @@ setInterval(updateCountdown, 1000);
   </div>
   <div class="container info">
     <p>
-      *Organiziran je prijevoz kombijem iz sale do smještaja koji cijelu noć stoji na raspolaganju gostima.
+      *Organiziran je prijevoz kombijem iz sale do smještaja koji cijelu noć stoji na raspolaganju gostima. Auto može ostati spavati na parkingu sale, a isti kombi vas drugi dan vraća po njega.
     </p>
   </div>
 </section>
@@ -636,16 +637,6 @@ setInterval(updateCountdown, 1000);
     <h2>6. lipnja 2026.</h2>
     <div class="divider"></div>
 
-    <div class="program-timeline">
-      <div class="timeline-item">
-        <div class="timeline-time">08:00 - 10:00</div>
-        <div class="timeline-divider"></div>
-        <div class="timeline-content">
-          <div class="timeline-activity">Doručak u hotelu</div>
-          <p class="timeline-location"><a href="https://maps.app.goo.gl/C539mv5piSMFJHa57" target="_blank">Dvorac Janković</a></p>
-        </div>
-      </div>
-
       <div class="timeline-item">
         <div class="timeline-time">12:00</div>
         <div class="timeline-divider"></div>
@@ -655,7 +646,6 @@ setInterval(updateCountdown, 1000);
         </div>
       </div>
     </div>
-  </div>
 </section>
 
 <!-- MAPS -->
@@ -681,17 +671,17 @@ setInterval(updateCountdown, 1000);
       <input type="text" name="website" id="website" style="display:none" tabindex="-1" autocomplete="off">
       
       <div class="form-group">
-        <label class="form-label">Imena i prezimena gostiju *</label>
+        <label class="form-label">Imena i prezimena gostiju</label>
         <div class="guest-list" id="guestList">
           <div class="guest-item">
-            <input type="text" class="form-input" placeholder="Ime i prezime" required maxlength="100">
+            <input type="text" class="form-input guest-name-input" placeholder="Ime i prezime" required maxlength="100">
           </div>
         </div>
         <button type="button" class="btn-add" onclick="addGuest()">+ Dodaj gosta</button>
       </div>
 
       <div class="form-group">
-        <label class="form-label">Napomena (prehrambena ograničenja, poruka, itd.)</label>
+        <label class="form-label">Posebne napomene, prehrambena ograničenja, posebni pozdravi, ... 🕺</label>
         <textarea class="form-input form-textarea" id="notes" placeholder="Unesite napomenu..." maxlength="500"></textarea>
       </div>
 
@@ -717,11 +707,34 @@ function addGuest() {
   const guestItem = document.createElement('div');
   guestItem.className = 'guest-item';
   guestItem.innerHTML = `
-    <input type="text" class="form-input" placeholder="Ime i prezime" required maxlength="100">
+    <input type="text" class="form-input guest-name-input" placeholder="Ime i prezime" required maxlength="100">
     <button type="button" class="btn-remove" onclick="removeGuest(this)">✕</button>
   `;
   guestList.appendChild(guestItem);
+  attachNameValidation(guestItem.querySelector('.guest-name-input'));
 }
+
+function attachNameValidation(input) {
+  input.addEventListener('input', function(e) {
+    // Dozvoli slova (svih jezika), razmake, crtice, apostrofe
+    this.value = this.value.replace(/[^\p{L}\s'-]/gu, '');
+  });
+}
+
+// Attach validation to initial input
+document.addEventListener('DOMContentLoaded', function() {
+  const initialInput = document.querySelector('.guest-name-input');
+  if (initialInput) attachNameValidation(initialInput);
+  
+  // Validacija za napomene - dozvoli više znakova ali blokiraj opasne
+  const notesInput = document.getElementById('notes');
+  if (notesInput) {
+    notesInput.addEventListener('input', function(e) {
+      // Blokiraj HTML tagove i skripte
+      this.value = this.value.replace(/<[^>]*>/g, '');
+    });
+  }
+});
 
 function removeGuest(btn) {
   btn.parentElement.remove();
@@ -788,7 +801,8 @@ document.getElementById('rsvpForm').addEventListener('submit', async function(e)
     lastSubmitTime = now;
     messageDiv.innerHTML = '<div class="form-message success">Hvala! Vaša potvrda je uspješno poslana. 🤍</div>';
     document.getElementById('rsvpForm').reset();
-    document.getElementById('guestList').innerHTML = '<div class="guest-item"><input type="text" class="form-input" placeholder="Ime i prezime" required maxlength="100"></div>';
+    document.getElementById('guestList').innerHTML = '<div class="guest-item"><input type="text" class="form-input guest-name-input" placeholder="Ime i prezime" required maxlength="100"></div>';
+    attachNameValidation(document.querySelector('.guest-name-input'));
     
   } catch (error) {
     messageDiv.innerHTML = '<div class="form-message error">Došlo je do greške. Molimo pokušajte ponovno.</div>';
