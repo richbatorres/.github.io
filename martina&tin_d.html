@@ -456,6 +456,21 @@ footer {
   margin-top: 10px;
   display: block;
 }
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+.monogram {
+  animation: pulse 2s ease-in-out infinite;
+}
 </style>
 </head>
 
@@ -654,6 +669,10 @@ setInterval(updateCountdown, 1000);
       <div class="form-group">
         <label class="form-label">Posebne napomene, prehrambena ograničenja, posebni pozdravi, ... 🕺</label>
         <textarea class="form-input form-textarea" id="notes" placeholder="Unesite napomenu..." maxlength="500"></textarea>
+      </div>
+
+      <div class="form-group" style="text-align: center; font-size: 16px; color: var(--primary); font-weight: 500; margin-top: 30px;">
+        ⏰ Molim te da potvrdiš svoj dolazak do <strong>30.4.2026.</strong>
       </div>
 
       <button type="submit" class="btn-submit" id="submitBtn">Pošalji potvrdu</button>
