@@ -1,0 +1,1430 @@
+﻿<!DOCTYPE html>
+<html lang="hr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Martina & Tin - Vjenčanje 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Allison&family=Playfair+Display:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #fafadd;
+            --color-beige: #f5f0d8;
+            --color-gold: #c9a752;
+            --color-gold-dark: #b8964a;
+            --color-text: #333;
+            --color-text-light: #666;
+            --color-success: #4caf50;
+            --color-error: #d32f2f;
+            --color-error-bg: #fdecea;
+            --color-success-bg: #e8f5e9;
+            --font-heading: 'Allison', cursive;
+            --font-body: 'Playfair Display', serif;
+            --radius: 8px;
+            --shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+            --safe-left: env(safe-area-inset-left, 0px);
+            --safe-right: env(safe-area-inset-right, 0px);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-bg: #f0f0c8;
+                --color-beige: #e8e4c0;
+                --color-gold: #c9a752;
+                --color-gold-dark: #b8964a;
+                --color-text: #333;
+                --color-text-light: #555;
+                --color-error-bg: #fdecea;
+                --color-success-bg: #e8f5e9;
+                --shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+                --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.15);
+            }
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            height: -webkit-fill-available;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--color-text);
+            background-color: var(--color-bg);
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            padding-top: var(--safe-top);
+            padding-bottom: var(--safe-bottom);
+            padding-left: var(--safe-left);
+            padding-right: var(--safe-right);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+            background: var(--color-bg);
+            border: 1px solid var(--color-gold);
+            box-shadow: 0 0 20px rgba(201, 167, 82, 0.08);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: linear-gradient(180deg, #f5f0d8 0%, var(--color-bg) 100%);
+        }
+
+        .hero__hearts {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .hero__title {
+            font-family: var(--font-heading);
+            font-size: clamp(50px, 12vw, 100px);
+            font-weight: 400;
+            color: var(--color-text);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            line-height: 1.1;
+        }
+
+        .hero__date {
+            font-family: var(--font-body);
+            font-size: 1.2rem;
+            color: var(--color-gold);
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .hero__subtitle {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            color: var(--color-text-light);
+            font-weight: 300;
+        }
+
+        /* Event Code Section */
+        .event-code {
+            padding: 20px;
+            display: none;
+        }
+
+        .event-code.visible {
+            display: block;
+        }
+
+        .event-code__input {
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 16px;
+            font-family: var(--font-body);
+            border: 2px solid var(--color-gold);
+            border-radius: var(--radius);
+            background: #ffffff;
+            color: var(--color-text);
+            text-align: center;
+            letter-spacing: 2px;
+            transition: border-color 0.3s ease;
+        }
+
+        .event-code__input:focus {
+            outline: none;
+            border-color: var(--color-gold-dark);
+            box-shadow: 0 0 0 3px rgba(201, 167, 82, 0.2);
+        }
+
+        .event-code__input::placeholder {
+            color: var(--color-text-light);
+            letter-spacing: 1px;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            padding: 20px;
+        }
+
+        .upload-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            min-height: 56px;
+            padding: 16px 24px;
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            font-weight: 500;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        .btn--primary {
+            background: #c9a752f3;
+            color: #ffffff;
+            box-shadow: var(--shadow);
+        }
+
+        .btn--primary:hover,
+        .btn--primary:focus {
+            background: #b8964a;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn--primary:active {
+            transform: translateY(0);
+            box-shadow: var(--shadow);
+        }
+
+        .btn--secondary {
+            background: var(--color-beige);
+            color: var(--color-text);
+            border: 2px solid transparent;
+        }
+
+        .btn--secondary:hover,
+        .btn--secondary:focus {
+            border-color: var(--color-gold);
+            transform: translateY(-1px);
+        }
+
+        .btn--secondary:active {
+            transform: translateY(0);
+        }
+
+        .btn:focus-visible {
+            outline: 3px solid var(--color-gold);
+            outline-offset: 2px;
+        }
+
+        .btn--small {
+            min-height: 48px;
+            padding: 12px 20px;
+            font-size: 1rem;
+        }
+
+        /* Hidden file inputs */
+        .file-input {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Progress Area */
+        .progress-area {
+            padding: 20px;
+            display: none;
+        }
+
+        .progress-area.visible {
+            display: block;
+        }
+
+        .progress-card {
+            background: var(--color-beige);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 12px;
+        }
+
+        .progress-card__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .progress-card__filename {
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 70%;
+        }
+
+        .progress-card__count {
+            font-size: 0.85rem;
+            color: var(--color-gold);
+            font-weight: 700;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar__fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-gold), var(--color-gold-dark));
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .progress-card__status {
+            font-size: 0.85rem;
+            color: var(--color-text-light);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Spinner */
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--color-beige);
+            border-top-color: var(--color-gold);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Messages */
+        .message {
+            padding: 16px 20px;
+            border-radius: var(--radius);
+            margin: 12px 20px;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.3s ease;
+        }
+
+        .message.visible {
+            display: flex;
+        }
+
+        .message--success {
+            background: var(--color-success-bg);
+            color: var(--color-success);
+            border: 1px solid var(--color-success);
+        }
+
+        .message--error {
+            background: var(--color-error-bg);
+            color: var(--color-error);
+            border: 1px solid var(--color-error);
+        }
+
+        .message__text {
+            flex: 1;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .message__close {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: inherit;
+            padding: 4px;
+            min-width: 48px;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Checkmark animation */
+        .checkmark {
+            display: inline-block;
+            animation: popIn 0.4s ease;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+            }
+
+            50% {
+                transform: scale(1.3);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            padding: 40px 20px 20px;
+        }
+
+        .gallery-section__title {
+            font-family: var(--font-heading);
+            font-size: clamp(40px, 8vw, 70px);
+            text-align: center;
+            margin-bottom: 24px;
+            color: var(--color-text);
+            font-weight: 400;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            margin-bottom: 24px;
+        }
+
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 1;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+            background: var(--color-beige);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .gallery-item img.loaded {
+            opacity: 1;
+        }
+
+        .gallery-item:hover img,
+        .gallery-item:focus img {
+            transform: scale(1.05);
+        }
+
+        .gallery-item__video-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .gallery-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-text-light);
+        }
+
+        .gallery-empty__icon {
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+
+        .gallery-actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            padding-top: calc(20px + var(--safe-top));
+            padding-bottom: calc(20px + var(--safe-bottom));
+        }
+
+        .lightbox.visible {
+            display: flex;
+        }
+
+        .lightbox__content {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+
+        .lightbox__video {
+            width: 90vw;
+            height: 60vh;
+            max-width: 900px;
+            border: none;
+            display: none;
+        }
+
+        .lightbox__close {
+            position: absolute;
+            top: calc(16px + var(--safe-top));
+            right: calc(16px + var(--safe-right));
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        .lightbox__close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .lightbox__nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            font-size: 2.5rem;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            transition: background 0.2s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .lightbox__nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .lightbox__nav--prev {
+            left: calc(16px + var(--safe-left));
+        }
+
+        .lightbox__nav--next {
+            right: calc(16px + var(--safe-right));
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-text-light);
+            font-size: 0.85rem;
+        }
+
+        .footer a {
+            color: var(--color-gold);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer__credit {
+            margin-bottom: 8px;
+        }
+
+        /* Responsive */
+        @media (min-width: 480px) {
+            .hero__title {
+                font-size: clamp(50px, 12vw, 100px);
+            }
+
+            .upload-buttons {
+                flex-direction: row;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
+            }
+
+            .hero__title {
+                font-size: clamp(50px, 12vw, 100px);
+            }
+
+            .container {
+                max-width: 800px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .gallery-grid {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 8px;
+            }
+
+            .container {
+                max-width: 800px;
+            }
+        }
+
+        /* Utility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* Divider */
+        .divider {
+            width: 60px;
+            height: 3px;
+            background: var(--color-gold);
+            margin: 30px auto;
+            border-radius: 1px;
+        }
+
+        /* Info Notice */
+        .info-notice {
+            margin: 0 20px 12px;
+            padding: 12px 16px;
+            background: var(--color-beige);
+            border-radius: var(--radius);
+            border-left: 3px solid var(--color-gold);
+        }
+
+        .info-notice__text {
+            font-size: 0.85rem;
+            color: var(--color-text-light);
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero__hearts" aria-hidden="true">❤️</div>
+        <h1 class="hero__title">Martina & Tin</h1>
+        <p class="hero__subtitle">Podijelite svoje uspomene s nama!</p>
+        <div class="hero__hearts" aria-hidden="true">❤️</div>
+    </header>
+
+    <main class="container">
+        <!-- Event Code Section -->
+        <section class="event-code" id="eventCodeSection" aria-label="Kod događaja">
+            <label for="eventCodeInput" class="sr-only">Kod događaja</label>
+            <input type="text" id="eventCodeInput" class="event-code__input" placeholder="Unesite kod"
+                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Upload Section -->
+        <section class="upload-section" aria-label="Prijenos datoteka">
+            <div class="upload-buttons">
+                <button class="btn btn--primary" id="btnGallery" aria-label="Odaberi datoteke iz galerije">
+                    🖼️ Odaberi iz galerije
+                </button>
+            </div>
+            <input type="file" id="inputGallery" class="file-input" accept="image/*,video/*" multiple aria-hidden="true"
+                tabindex="-1">
+        </section>
+
+        <!-- Large file notice -->
+        <div class="info-notice" id="largeFileNotice">
+            <p class="info-notice__text">
+                📁 Videi do 750 MB su podržani — veće datoteke se automatski šalju u dijelovima za pouzdaniji prijenos.
+                Originalna kvaliteta je očuvana.
+            </p>
+        </div>
+
+        <!-- Progress Area -->
+        <section class="progress-area" id="progressArea" aria-label="Napredak prijenosa" aria-live="polite">
+            <div class="progress-card" id="progressCard">
+                <div class="progress-card__header">
+                    <span class="progress-card__filename" id="progressFilename">—</span>
+                    <span class="progress-card__count" id="progressCount"></span>
+                </div>
+                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar__fill" id="progressFill"></div>
+                </div>
+                <div class="progress-card__status" id="progressStatus">
+                    <span class="spinner"></span>
+                    <span>Prijenos u tijeku...</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Messages -->
+        <div class="message message--success" id="msgSuccess" role="alert" aria-live="assertive">
+            <span class="checkmark">✅</span>
+            <span class="message__text">❤️ Hvala što dijelite uspomene!</span>
+            <button class="message__close" aria-label="Zatvori poruku" onclick="hideMessage('success')">×</button>
+        </div>
+
+        <div class="message message--error" id="msgError" role="alert" aria-live="assertive">
+            <span class="message__text" id="errorText">Nešto je pošlo po krivu.</span>
+            <button class="btn btn--small" id="btnRetry" aria-label="Pokušaj ponovo">Ponovo</button>
+            <button class="message__close" aria-label="Zatvori poruku" onclick="hideMessage('error')">×</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Gallery Section -->
+        <section class="gallery-section" aria-label="Galerija fotografija">
+            <h2 class="gallery-section__title">📸 Galerija</h2>
+            <div class="gallery-grid" id="galleryGrid"></div>
+            <div class="gallery-empty" id="galleryEmpty">
+                <div class="gallery-empty__icon">📷</div>
+                <p>Još nema fotografija. Budite prvi!</p>
+            </div>
+            <div class="gallery-actions">
+                <button class="btn btn--secondary btn--small" id="btnLoadMore" style="display:none;">
+                    Učitaj više
+                </button>
+                <button class="btn btn--secondary btn--small" id="btnRefresh" aria-label="Osvježi galeriju">
+                    🔄 Osvježi
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-label="Pregled fotografije" aria-modal="true">
+        <button class="lightbox__close" id="lightboxClose" aria-label="Zatvori pregled">×</button>
+        <button class="lightbox__nav lightbox__nav--prev" id="lightboxPrev" aria-label="Prethodna slika">‹</button>
+        <img class="lightbox__content" id="lightboxImg" src="" alt="Fotografija u punoj veličini">
+        <video class="lightbox__content lightbox__video" id="lightboxVideo" controls playsinline></video>
+        <button class="lightbox__nav lightbox__nav--next" id="lightboxNext" aria-label="Sljedeća slika">›</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+    </footer>
+
+    <!-- Status for screen readers -->
+    <div id="srStatus" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+    <script>
+        (function () {
+            'use strict';
+
+            // ===== Configuration =====
+            const CONFIG = {
+                MAX_FILES_PER_BATCH: 50,
+                MAX_IMAGE_SIZE: 50 * 1024 * 1024,   // 50MB
+                MAX_VIDEO_SIZE: 750 * 1024 * 1024,   // 750MB
+                LARGE_FILE_THRESHOLD: 20 * 1024 * 1024, // 20MB — above this, use chunked upload
+                CHUNK_SIZE: 5 * 1024 * 1024, // 5MB per chunk (safe for Apps Script base64)
+                GALLERY_PAGE_SIZE: 20,
+                SUCCESS_DISMISS_MS: 5000,
+                RETRY_ATTEMPTS: 1,
+                REQUIRE_EVENT_CODE: false
+            };
+
+            // ===== State =====
+            const state = {
+                uploading: false,
+                galleryPage: 0,
+                galleryCache: [],
+                hasMoreImages: true,
+                currentFiles: [],
+                retryFiles: [],
+                lightboxIndex: -1,
+                uploadedCount: 0
+            };
+
+            // ===== DOM Elements =====
+            const els = {
+                eventCodeSection: document.getElementById('eventCodeSection'),
+                eventCodeInput: document.getElementById('eventCodeInput'),
+                btnGallery: document.getElementById('btnGallery'),
+                inputGallery: document.getElementById('inputGallery'),
+                progressArea: document.getElementById('progressArea'),
+                progressFilename: document.getElementById('progressFilename'),
+                progressCount: document.getElementById('progressCount'),
+                progressFill: document.getElementById('progressFill'),
+                progressStatus: document.getElementById('progressStatus'),
+                msgSuccess: document.getElementById('msgSuccess'),
+                msgError: document.getElementById('msgError'),
+                errorText: document.getElementById('errorText'),
+                btnRetry: document.getElementById('btnRetry'),
+                galleryGrid: document.getElementById('galleryGrid'),
+                galleryEmpty: document.getElementById('galleryEmpty'),
+                btnLoadMore: document.getElementById('btnLoadMore'),
+                btnRefresh: document.getElementById('btnRefresh'),
+                lightbox: document.getElementById('lightbox'),
+                lightboxClose: document.getElementById('lightboxClose'),
+                lightboxPrev: document.getElementById('lightboxPrev'),
+                lightboxNext: document.getElementById('lightboxNext'),
+                lightboxImg: document.getElementById('lightboxImg'),
+                lightboxVideo: document.getElementById('lightboxVideo'),
+                srStatus: document.getElementById('srStatus')
+            };
+
+            // ===== Initialization =====
+            function init() {
+                // Show event code section if required
+                if (CONFIG.REQUIRE_EVENT_CODE) {
+                    const savedCode = sessionStorage.getItem('eventCode');
+                    if (!savedCode) {
+                        els.eventCodeSection.classList.add('visible');
+                    }
+                }
+
+                // Bind events
+                els.btnGallery.addEventListener('click', handleGalleryClick);
+                els.inputGallery.addEventListener('change', handleFileSelect);
+                els.btnRetry.addEventListener('click', handleRetry);
+                els.btnLoadMore.addEventListener('click', loadMoreGallery);
+                els.btnRefresh.addEventListener('click', refreshGallery);
+                els.lightboxClose.addEventListener('click', closeLightbox);
+                els.lightboxPrev.addEventListener('click', lightboxPrev);
+                els.lightboxNext.addEventListener('click', lightboxNext);
+                els.lightbox.addEventListener('click', function (e) {
+                    if (e.target === els.lightbox) closeLightbox();
+                });
+
+                // Keyboard support for lightbox
+                document.addEventListener('keydown', function (e) {
+                    if (!els.lightbox.classList.contains('visible')) return;
+                    if (e.key === 'Escape') closeLightbox();
+                    if (e.key === 'ArrowLeft') lightboxPrev();
+                    if (e.key === 'ArrowRight') lightboxNext();
+                });
+
+                // Load gallery
+                loadGallery();
+            }
+
+            // ===== Upload Handlers =====
+            function handleGalleryClick() {
+                if (state.uploading) return;
+                els.inputGallery.click();
+            }
+
+            function handleFileSelect(e) {
+                const files = Array.from(e.target.files);
+                if (!files.length) return;
+
+                // Reset input so same file can be selected again
+                e.target.value = '';
+
+                // Validate files
+                const validFiles = [];
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    var validation = validateFile(file);
+                    if (validation !== true) {
+                        showError(validation);
+                        return;
+                    }
+                    validFiles.push(file);
+                }
+
+                uploadFiles(validFiles);
+            }
+
+            function validateFile(file) {
+                var isVideo = file.type.startsWith('video/');
+                var isImage = file.type.startsWith('image/');
+
+                if (!isVideo && !isImage) {
+                    return 'Nepodržani format datoteke.';
+                }
+
+                if (isImage && file.size > CONFIG.MAX_IMAGE_SIZE) {
+                    return 'Datoteka je prevelika. Maksimum: 50MB za slike, 750MB za video.';
+                }
+
+                if (isVideo && file.size > CONFIG.MAX_VIDEO_SIZE) {
+                    return 'Datoteka je prevelika. Maksimum: 50MB za slike, 750MB za video.';
+                }
+
+                return true;
+            }
+
+            // ===== Upload Logic =====
+            const PARALLEL_UPLOADS = 3;
+
+            function uploadFiles(files) {
+                state.uploading = true;
+                state.currentFiles = files;
+                state.retryFiles = [];
+                state.uploadedCount = 0;
+
+                hideMessage('success');
+                hideMessage('error');
+                showProgress();
+                disableButtons(true);
+                announce('Prijenos započet. ' + files.length + ' datoteka.');
+
+                var smallFiles = [];
+                var largeFiles = [];
+                for (var i = 0; i < files.length; i++) {
+                    if (files[i].size > CONFIG.LARGE_FILE_THRESHOLD) {
+                        largeFiles.push(files[i]);
+                    } else {
+                        smallFiles.push(files[i]);
+                    }
+                }
+
+                var allTasks = [];
+                if (smallFiles.length > 0) allTasks.push(uploadSmallFilesParallel(smallFiles, files.length));
+                if (largeFiles.length > 0) allTasks.push(uploadLargeFilesChunked(largeFiles, files.length));
+
+                Promise.all(allTasks).then(function () { onUploadComplete(); });
+            }
+
+            function uploadSmallFilesParallel(files, totalCount) {
+                var queue = files.slice();
+                var active = 0;
+                return new Promise(function (resolve) {
+                    function startNext() {
+                        if (queue.length === 0 && active === 0) { resolve(); return; }
+                        while (active < PARALLEL_UPLOADS && queue.length > 0) {
+                            active++;
+                            var file = queue.shift();
+                            uploadSingleSmallFile(file, totalCount).then(function () {
+                                active--;
+                                state.uploadedCount++;
+                                updateProgress('', state.uploadedCount, totalCount,
+                                    Math.round((state.uploadedCount / totalCount) * 100),
+                                    state.uploadedCount + ' / ' + totalCount + ' završeno');
+                                startNext();
+                            }).catch(function () {
+                                active--;
+                                state.uploadedCount++;
+                                startNext();
+                            });
+                        }
+                    }
+                    startNext();
+                });
+            }
+
+            function uploadSingleSmallFile(file, totalCount) {
+                return new Promise(function (resolve, reject) {
+                    readFileAsBase64(file, function (base64Data) {
+                        if (!base64Data) { state.retryFiles.push(file); reject(); return; }
+                        var payload = { fileName: file.name, mimeType: file.type, data: base64Data, eventCode: getEventCode() };
+                        google.script.run
+                            .withSuccessHandler(function () { resolve(); })
+                            .withFailureHandler(function () {
+                                if (!file._retried) {
+                                    file._retried = true;
+                                    google.script.run.withSuccessHandler(function () { resolve(); })
+                                        .withFailureHandler(function () { state.retryFiles.push(file); reject(); })
+                                        .uploadFile(payload);
+                                } else { state.retryFiles.push(file); reject(); }
+                            })
+                            .uploadFile(payload);
+                    });
+                });
+            }
+
+            // ===== Chunked Upload for Large Files =====
+            function uploadLargeFilesChunked(files, totalCount) {
+                var index = 0;
+                return new Promise(function (resolve) {
+                    function next() {
+                        if (index >= files.length) { resolve(); return; }
+                        var file = files[index]; index++;
+                        uploadFileInChunks(file, totalCount).then(function () {
+                            state.uploadedCount++;
+                            updateProgress('', state.uploadedCount, totalCount,
+                                Math.round((state.uploadedCount / totalCount) * 100),
+                                state.uploadedCount + ' / ' + totalCount + ' završeno');
+                            next();
+                        }).catch(function () {
+                            state.retryFiles.push(file);
+                            state.uploadedCount++;
+                            next();
+                        });
+                    }
+                    next();
+                });
+            }
+
+            function uploadFileInChunks(file, totalCount) {
+                var chunkSize = CONFIG.CHUNK_SIZE;
+                var totalChunks = Math.ceil(file.size / chunkSize);
+                var uploadId = Date.now().toString(36) + Math.random().toString(36).substring(2, 10);
+                var chunkIndex = 0;
+
+                updateProgress(file.name, state.uploadedCount + 1, totalCount, 0, 'Priprema prijenosa...');
+
+                return new Promise(function (resolve, reject) {
+                    function sendNextChunk() {
+                        if (chunkIndex >= totalChunks) { resolve(); return; }
+
+                        var start = chunkIndex * chunkSize;
+                        var end = Math.min(start + chunkSize, file.size);
+                        var blob = file.slice(start, end);
+
+                        var percent = Math.round(((chunkIndex + 1) / totalChunks) * 100);
+                        updateProgress(file.name, state.uploadedCount + 1, totalCount, percent,
+                            'Prijenos: ' + percent + '% (' + (chunkIndex + 1) + '/' + totalChunks + ')');
+
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            var base64 = e.target.result.split(',')[1];
+                            var payload = {
+                                uploadId: uploadId, chunkIndex: chunkIndex, totalChunks: totalChunks,
+                                data: base64, fileName: file.name, mimeType: file.type
+                            };
+
+                            google.script.run
+                                .withSuccessHandler(function (result) {
+                                    chunkIndex++;
+                                    if (result && result.done) { resolve(); }
+                                    else { sendNextChunk(); }
+                                })
+                                .withFailureHandler(function (error) {
+                                    if (!payload._retried) {
+                                        payload._retried = true;
+                                        google.script.run
+                                            .withSuccessHandler(function (result) {
+                                                chunkIndex++;
+                                                if (result && result.done) { resolve(); }
+                                                else { sendNextChunk(); }
+                                            })
+                                            .withFailureHandler(function () { reject(error); })
+                                            .uploadChunk(payload);
+                                    } else { reject(error); }
+                                })
+                                .uploadChunk(payload);
+                        };
+                        reader.onerror = function () { reject(new Error('Greška pri čitanju.')); };
+                        reader.readAsDataURL(blob);
+                    }
+                    sendNextChunk();
+                });
+            }
+
+            function onUploadComplete() {
+                state.uploading = false;
+                hideProgress();
+                disableButtons(false);
+
+                if (state.retryFiles.length === 0) {
+                    showSuccess();
+                    announce('Prijenos završen. Hvala što dijelite uspomene!');
+                } else if (state.retryFiles.length < state.currentFiles.length) {
+                    showSuccess();
+                    showError(state.retryFiles.length + ' datoteka nije uspješno preneseno.');
+                }
+
+                // Refresh gallery
+                setTimeout(refreshGallery, 1000);
+            }
+
+            function handleRetry() {
+                if (state.retryFiles.length > 0) {
+                    var files = state.retryFiles.slice();
+                    state.retryFiles = [];
+                    hideMessage('error');
+                    uploadFiles(files);
+                }
+            }
+
+            // ===== File Reading =====
+            function readFileAsBase64(file, callback) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var base64 = e.target.result.split(',')[1];
+                    callback(base64);
+                };
+                reader.onerror = function () {
+                    callback(null);
+                };
+                reader.readAsDataURL(file);
+            }
+
+            // ===== UI Helpers =====
+            function showProgress() {
+                els.progressArea.classList.add('visible');
+            }
+
+            function hideProgress() {
+                els.progressArea.classList.remove('visible');
+            }
+
+            function updateProgress(filename, current, total, percent, statusText) {
+                els.progressFilename.textContent = truncateFilename(filename, 30);
+                els.progressCount.textContent = current + ' / ' + total;
+                els.progressFill.style.width = percent + '%';
+
+                var progressBar = els.progressFill.parentElement;
+                progressBar.setAttribute('aria-valuenow', percent);
+
+                var spinnerHtml = percent < 100 ? '<span class="spinner"></span>' : '';
+                els.progressStatus.innerHTML = spinnerHtml + '<span>' + statusText + '</span>';
+            }
+
+            function showSuccess() {
+                els.msgSuccess.classList.add('visible');
+                setTimeout(function () {
+                    hideMessage('success');
+                }, CONFIG.SUCCESS_DISMISS_MS);
+            }
+
+            function showError(text) {
+                els.errorText.textContent = text;
+                els.msgError.classList.add('visible');
+            }
+
+            function hideMessage(type) {
+                if (type === 'success') {
+                    els.msgSuccess.classList.remove('visible');
+                } else if (type === 'error') {
+                    els.msgError.classList.remove('visible');
+                }
+            }
+            // Make hideMessage available globally for inline onclick
+            window.hideMessage = hideMessage;
+
+            function disableButtons(disabled) {
+                els.btnGallery.disabled = disabled;
+                els.btnGallery.style.opacity = disabled ? '0.6' : '1';
+            }
+
+            function truncateFilename(name, maxLen) {
+                if (name.length <= maxLen) return name;
+                var ext = name.split('.').pop();
+                var base = name.substring(0, maxLen - ext.length - 4);
+                return base + '...' + ext;
+            }
+
+            function getEventCode() {
+                if (!CONFIG.REQUIRE_EVENT_CODE) return '';
+                return sessionStorage.getItem('eventCode') || els.eventCodeInput.value.trim();
+            }
+
+            function announce(text) {
+                els.srStatus.textContent = text;
+            }
+
+            // ===== Gallery Logic =====
+            function loadGallery() {
+                state.galleryPage = 0;
+                state.galleryCache = [];
+                state.hasMoreImages = true;
+                els.galleryGrid.innerHTML = '';
+                loadMoreGallery();
+            }
+
+            function loadMoreGallery() {
+                els.btnLoadMore.disabled = true;
+                els.btnLoadMore.textContent = 'Učitavanje...';
+
+                google.script.run
+                    .withSuccessHandler(function (result) {
+                        if (result && result.images && result.images.length > 0) {
+                            state.galleryCache = state.galleryCache.concat(result.images);
+                            renderGalleryItems(result.images);
+                            state.galleryPage++;
+                            els.galleryEmpty.style.display = 'none';
+
+                            if (result.images.length < CONFIG.GALLERY_PAGE_SIZE) {
+                                state.hasMoreImages = false;
+                                els.btnLoadMore.style.display = 'none';
+                            } else {
+                                els.btnLoadMore.style.display = 'inline-flex';
+                            }
+                        } else {
+                            state.hasMoreImages = false;
+                            els.btnLoadMore.style.display = 'none';
+                            if (state.galleryCache.length === 0) {
+                                els.galleryEmpty.style.display = 'block';
+                            }
+                        }
+                        els.btnLoadMore.disabled = false;
+                        els.btnLoadMore.textContent = 'Učitaj više';
+                    })
+                    .withFailureHandler(function (error) {
+                        els.btnLoadMore.disabled = false;
+                        els.btnLoadMore.textContent = 'Učitaj više';
+                        if (state.galleryCache.length === 0) {
+                            els.galleryEmpty.style.display = 'block';
+                        }
+                    })
+                    .getGalleryImages(state.galleryPage, CONFIG.GALLERY_PAGE_SIZE);
+            }
+
+            function refreshGallery() {
+                els.btnRefresh.disabled = true;
+                els.btnRefresh.textContent = '⏳ Osvježavanje...';
+                loadGallery();
+                setTimeout(function () {
+                    els.btnRefresh.disabled = false;
+                    els.btnRefresh.textContent = '🔄 Osvježi';
+                }, 1500);
+            }
+
+            function renderGalleryItems(images) {
+                images.forEach(function (img, i) {
+                    var globalIndex = state.galleryCache.length - images.length + i;
+                    var item = document.createElement('div');
+                    item.className = 'gallery-item';
+                    item.setAttribute('tabindex', '0');
+                    item.setAttribute('role', 'button');
+                    item.setAttribute('aria-label', 'Otvori fotografiju: ' + (img.name || 'slika'));
+
+                    var imgEl = document.createElement('img');
+                    imgEl.dataset.src = img.thumbnailUrl || img.url;
+                    imgEl.dataset.full = img.url;
+                    imgEl.alt = img.name || 'Fotografija s vjenčanja';
+                    imgEl.loading = 'lazy';
+
+                    item.appendChild(imgEl);
+
+                    // Video badge
+                    if (img.isVideo) {
+                        var badge = document.createElement('span');
+                        badge.className = 'gallery-item__video-badge';
+                        badge.textContent = '▶ Video';
+                        badge.setAttribute('aria-hidden', 'true');
+                        item.appendChild(badge);
+                    }
+
+                    // Click/tap to open lightbox
+                    (function (idx) {
+                        item.addEventListener('click', function () {
+                            openLightbox(img.url, img.name, idx);
+                        });
+                        item.addEventListener('keydown', function (e) {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                openLightbox(img.url, img.name, idx);
+                            }
+                        });
+                    })(globalIndex);
+
+                    els.galleryGrid.appendChild(item);
+
+                    // Observe for lazy loading
+                    observeImage(imgEl);
+                });
+            }
+
+            // ===== Lazy Loading with IntersectionObserver =====
+            var imageObserver = null;
+
+            function setupObserver() {
+                if ('IntersectionObserver' in window) {
+                    imageObserver = new IntersectionObserver(function (entries) {
+                        entries.forEach(function (entry) {
+                            if (entry.isIntersecting) {
+                                var img = entry.target;
+                                img.src = img.dataset.src;
+                                img.onload = function () {
+                                    img.classList.add('loaded');
+                                };
+                                img.onerror = function () {
+                                    img.classList.add('loaded');
+                                    img.alt = 'Greška pri učitavanju';
+                                };
+                                imageObserver.unobserve(img);
+                            }
+                        });
+                    }, {
+                        rootMargin: '100px'
+                    });
+                }
+            }
+
+            function observeImage(imgEl) {
+                if (imageObserver) {
+                    imageObserver.observe(imgEl);
+                } else {
+                    // Fallback: load immediately
+                    imgEl.src = imgEl.dataset.src;
+                    imgEl.onload = function () { imgEl.classList.add('loaded'); };
+                }
+            }
+
+            // ===== Lightbox =====
+            function openLightbox(url, name, index) {
+                state.lightboxIndex = index;
+                showLightboxMedia(state.galleryCache[index]);
+                els.lightbox.classList.add('visible');
+                document.body.style.overflow = 'hidden';
+                updateLightboxNav();
+                els.lightboxClose.focus();
+            }
+
+            function showLightboxMedia(item) {
+                if (item.isVideo) {
+                    els.lightboxImg.style.display = 'none';
+                    els.lightboxVideo.style.display = 'block';
+                    els.lightboxVideo.src = item.url;
+                    els.lightboxVideo.load();
+                } else {
+                    els.lightboxVideo.style.display = 'none';
+                    els.lightboxVideo.pause();
+                    els.lightboxVideo.src = '';
+                    els.lightboxImg.style.display = 'block';
+                    els.lightboxImg.src = item.url;
+                    els.lightboxImg.alt = item.name || 'Fotografija u punoj veličini';
+                }
+            }
+
+            function closeLightbox() {
+                els.lightbox.classList.remove('visible');
+                els.lightboxImg.src = '';
+                els.lightboxVideo.pause();
+                els.lightboxVideo.src = '';
+                els.lightboxVideo.style.display = 'none';
+                els.lightboxImg.style.display = 'block';
+                document.body.style.overflow = '';
+                state.lightboxIndex = -1;
+            }
+
+            function lightboxPrev() {
+                if (state.lightboxIndex <= 0) return;
+                state.lightboxIndex--;
+                showLightboxMedia(state.galleryCache[state.lightboxIndex]);
+                updateLightboxNav();
+            }
+
+            function lightboxNext() {
+                if (state.lightboxIndex >= state.galleryCache.length - 1) return;
+                state.lightboxIndex++;
+                showLightboxMedia(state.galleryCache[state.lightboxIndex]);
+                updateLightboxNav();
+            }
+
+            function updateLightboxNav() {
+                els.lightboxPrev.style.opacity = state.lightboxIndex <= 0 ? '0.3' : '1';
+                els.lightboxPrev.disabled = state.lightboxIndex <= 0;
+                els.lightboxNext.style.opacity = state.lightboxIndex >= state.galleryCache.length - 1 ? '0.3' : '1';
+                els.lightboxNext.disabled = state.lightboxIndex >= state.galleryCache.length - 1;
+            }
+
+            // ===== Polyfill for google.script.run (for local testing) =====
+            if (typeof google === 'undefined') {
+                window.google = {
+                    script: {
+                        run: new Proxy({}, {
+                            get: function (target, prop) {
+                                if (prop === 'withSuccessHandler') {
+                                    return function (handler) {
+                                        return new Proxy({}, {
+                                            get: function (t, p) {
+                                                if (p === 'withFailureHandler') {
+                                                    return function (errHandler) {
+                                                        return new Proxy({}, {
+                                                            get: function () {
+                                                                return function () {
+                                                                    // Simulate server response
+                                                                    setTimeout(function () {
+                                                                        if (p === 'getGalleryImages') {
+                                                                            handler({ images: [] });
+                                                                        } else {
+                                                                            handler({ success: true });
+                                                                        }
+                                                                    }, 1000);
+                                                                };
+                                                            }
+                                                        });
+                                                    };
+                                                }
+                                                return function () {
+                                                    setTimeout(function () { handler({ success: true }); }, 1000);
+                                                };
+                                            }
+                                        });
+                                    };
+                                }
+                                if (prop === 'withFailureHandler') {
+                                    return function () { return google.script.run; };
+                                }
+                                return function () { };
+                            }
+                        })
+                    }
+                };
+            }
+
+            // ===== Start =====
+            setupObserver();
+            init();
+
+        })();
+    </script>
+</body>
+
+</html>

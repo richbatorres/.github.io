@@ -1,0 +1,6 @@
+# OAuth secrets
+client_secret_*.json
+**/client_secret_*.json
+
+# Environment files
+.env

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="hr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>QR Kartice - Martina & Tin</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Allison&family=Playfair+Display:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Playfair Display', serif;
+            background: #fff;
+            color: #333;
+        }
+
+        /* Print layout: 10 cards per A4 page (2 columns × 5 rows) */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0;
+            width: 210mm;
+            margin: 0 auto;
+        }
+
+        .card {
+            width: 90mm;
+            height: 55mm;
+            border: 1px dashed #ccc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 5mm;
+            background: #fafadd;
+            position: relative;
+            overflow: hidden;
+            page-break-inside: avoid;
+        }
+
+        .card__title {
+            font-family: 'Allison', cursive;
+            font-size: 28px;
+            color: #c9a752;
+            line-height: 1;
+            margin-bottom: 2mm;
+        }
+
+        .card__subtitle {
+            font-size: 9px;
+            font-weight: 400;
+            color: #666;
+            margin-bottom: 3mm;
+            letter-spacing: 0.5px;
+        }
+
+        .card__qr {
+            width: 22mm;
+            height: 22mm;
+            object-fit: contain;
+        }
+
+        .card__cta {
+            font-size: 8px;
+            color: #333;
+            margin-top: 2mm;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .card__footer {
+            font-size: 7px;
+            color: #999;
+            margin-top: 1mm;
+        }
+
+        /* Screen preview styles */
+        @media screen {
+            body {
+                padding: 20px;
+                background: #eee;
+            }
+
+            .print-info {
+                text-align: center;
+                margin-bottom: 20px;
+                font-size: 14px;
+                color: #666;
+            }
+
+            .print-info strong {
+                color: #333;
+            }
+
+            .cards-grid {
+                box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+                background: #fff;
+                padding: 10mm;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: #fff;
+            }
+
+            .print-info {
+                display: none;
+            }
+
+            .cards-grid {
+                padding: 5mm;
+                width: 100%;
+            }
+
+            .card {
+                border: 1px dashed #ddd;
+            }
+
+            @page {
+                size: A4;
+                margin: 5mm;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="print-info">
+        <p><strong>QR kartice za vjenčanje — Martina & Tin</strong></p>
+        <p>10 kartica po stranici (90×55 mm, veličina vizitke). Ctrl+P za ispis.</p>
+        <p>Izrežite po isprekidanim linijama.</p>
+    </div>
+
+    <div class="cards-grid" id="cardsGrid">
+    </div>
+
+    <script>
+        // Generate 50 cards (5 pages × 10 cards)
+        const grid = document.getElementById('cardsGrid');
+        const cardCount = 50;
+
+        for (let i = 0; i < cardCount; i++) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+      <div class="card__title">Martina & Tin</div>
+      <div class="card__subtitle">Podijelite svoje uspomene s nama!</div>
+      <img class="card__qr" src="gallery_QR_code.png" alt="QR kod za galeriju">
+      <div class="card__cta">Skenirajte QR kod za upload fotografija i videa</div>
+    `;
+            grid.appendChild(card);
+        }
+    </script>
+
+</body>
+
+</html>

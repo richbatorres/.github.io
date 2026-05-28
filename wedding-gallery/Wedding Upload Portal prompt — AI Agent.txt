@@ -1,0 +1,644 @@
+# Wedding Upload Portal — AI Agent Implementation Prompt
+Version: 1.0  
+Target Stack: Google Apps Script + Google Drive + Google Photos  
+Deployment Target: Google Workspace / Personal Google Account  
+Primary Goal: Build a private wedding upload portal for guests using only free Google services.
+
+---
+
+# ROLE
+
+You are a senior full-stack software engineer and solution architect specialized in:
+- Google Apps Script
+- Google Drive API
+- Google Photos integrations
+- mobile-first UX
+- QR-based event workflows
+- low-friction upload systems
+- production-grade frontend engineering
+- secure cloud file upload systems
+
+You are tasked with building a production-ready “Wedding Upload Portal” optimized for:
+- wedding guests
+- mobile phones
+- simplicity
+- zero onboarding friction
+- high reliability during live events
+
+You must behave like an experienced software engineer designing a real-world production system.
+
+---
+
+# PROJECT GOAL
+
+Build a private wedding cloud system where wedding guests can:
+
+1. Scan a QR code
+2. Open a mobile-friendly upload portal
+3. Either:
+   - take a photo/video directly from camera
+   - upload from local gallery
+4. Upload media directly into the couple’s Google Drive
+5. View a shared gallery of uploaded media
+
+The entire system must:
+- use only free Google services
+- not require a dedicated mobile app
+- require no login for guests
+- work well on iPhone and Android
+- support videos and photos
+- be extremely simple for non-technical guests
+
+---
+
+# HIGH LEVEL SYSTEM ARCHITECTURE
+
+```text
+Guests
+   ↓
+QR Code
+   ↓
+Google Apps Script Web App
+   ↓
+Upload Handler
+   ↓
+Google Drive Storage
+   ↓
+Optional:
+Google Photos Shared Album
+
+---
+
+# CORE REQUIREMENTS
+
+## Functional Requirements
+
+### Uploading
+
+Guests must be able to:
+
+* upload photos
+* upload videos
+* upload multiple files
+* use mobile camera directly
+* use local phone gallery
+
+### Gallery
+
+Guests must be able to:
+
+* open shared gallery
+* browse uploaded content
+* optionally open Google Photos shared album
+
+### Mobile UX
+
+The portal must:
+
+* be mobile-first
+* have large buttons
+* support iOS Safari
+* support Android Chrome
+* avoid unnecessary clicks
+
+### Hosting
+
+The entire system must:
+
+* run on Google Apps Script
+* deploy as Web App
+* use Google Drive as storage backend
+
+### Security
+
+The system must:
+
+* avoid exposing Drive internals
+* restrict upload target folder
+* prevent arbitrary Drive access
+* sanitize uploaded filenames
+
+---
+
+# NON-FUNCTIONAL REQUIREMENTS
+
+The system must prioritize:
+
+1. Reliability during live event
+2. Simplicity
+3. Fast uploads
+4. Low maintenance
+5. Mobile compatibility
+6. Ease of deployment
+7. Security
+
+---
+
+# IMPLEMENTATION PHASES
+
+---
+
+# PHASE 1 — GOOGLE DRIVE SETUP
+
+Create detailed instructions and implementation for:
+
+## 1. Create Root Folder
+
+Folder name example:
+
+```text
+Tin i Martina Wedding Uploads
+```
+
+## 2. Create Subfolders
+
+Must support:
+
+```text
+/photos
+/videos
+/raw
+```
+
+## 3. Configure Sharing
+
+Requirements:
+
+* guests must NOT gain direct Drive access
+* only Apps Script uploads into folder
+* owner remains sole manager
+
+---
+
+# PHASE 2 — GOOGLE APPS SCRIPT BACKEND
+
+Build a production-ready Apps Script backend.
+
+## Required Features
+
+### Web App
+
+Deploy as:
+
+```javascript
+doGet()
+```
+
+### Upload Endpoint
+
+Implement:
+
+```javascript
+doPost()
+```
+
+### Upload Logic
+
+Must:
+
+* receive multipart uploads
+* validate file types
+* validate file size
+* rename files safely
+* store files into proper folders
+
+### File Naming Convention
+
+Use:
+
+```text
+timestamp_random_originalname
+```
+
+Example:
+
+```text
+20260528_213522_IMG_5531.jpg
+```
+
+---
+
+# PHASE 3 — FRONTEND PORTAL
+
+Build a modern mobile-first HTML/CSS/JS frontend.
+
+## Design Requirements
+
+### Style
+
+Use:
+
+* clean wedding aesthetic
+* elegant typography
+* large upload buttons
+* simple UX
+
+### Colors
+
+Use:
+
+* white
+* soft beige
+* muted gold accents
+
+### Responsive
+
+Must work perfectly on:
+
+* iPhone Safari
+* Android Chrome
+
+---
+
+# FRONTEND FEATURES
+
+## Hero Section
+
+Example:
+
+```text
+❤️ Tin & Martina Wedding ❤️
+Share your memories with us
+```
+
+---
+
+## Upload Buttons
+
+Must include:
+
+### Button 1
+
+```text
+📷 Take Photo / Video
+```
+
+Requirements:
+
+* opens device camera directly
+* uses mobile capture attribute
+
+### Button 2
+
+```text
+🖼 Upload from Gallery
+```
+
+Requirements:
+
+* opens local file picker
+
+---
+
+## Upload Progress
+
+Must show:
+
+* upload spinner
+* upload percentage
+* success state
+* failure state
+
+---
+
+## Success Message
+
+Example:
+
+```text
+❤️ Thank you for sharing your memories!
+```
+
+---
+
+# PHASE 4 — FILE HANDLING
+
+Implement robust upload handling.
+
+## Allowed File Types
+
+### Images
+
+```text
+jpg
+jpeg
+png
+heic
+webp
+```
+
+### Videos
+
+```text
+mp4
+mov
+hevc
+```
+
+---
+
+## File Size Limits
+
+Recommended:
+
+```text
+Images: 25 MB
+Videos: 500 MB
+```
+
+---
+
+## Validation Requirements
+
+Must validate:
+
+* mime type
+* extension
+* upload size
+* malformed requests
+
+---
+
+# PHASE 5 — SECURITY
+
+Implement security best practices.
+
+## Prevent Abuse
+
+Must include:
+
+* upload rate limiting
+* basic anti-spam protection
+* invalid mime rejection
+
+---
+
+## Sanitize Inputs
+
+Must sanitize:
+
+* filenames
+* metadata
+* form values
+
+---
+
+## Prevent Drive Exposure
+
+Never expose:
+
+* Drive folder IDs publicly
+* admin URLs
+* internal APIs
+
+---
+
+# PHASE 6 — GALLERY INTEGRATION
+
+Implement shared gallery support.
+
+## Option A — Google Photos Album
+
+Provide:
+
+* setup instructions
+* shared album integration
+* public read-only gallery link
+
+---
+
+## Option B — Custom Gallery Page
+
+Implement:
+
+* recent uploads grid
+* thumbnails
+* lazy loading
+* mobile responsive gallery
+
+---
+
+# PHASE 7 — QR CODE FLOW
+
+Implement QR onboarding flow.
+
+## Requirements
+
+Guest flow:
+
+```text
+Scan QR
+→ Open portal
+→ Upload media
+→ Done
+```
+
+---
+
+## QR Requirements
+
+Provide:
+
+* QR generation instructions
+* printable wedding card design
+* high-contrast QR format
+
+---
+
+# PHASE 8 — DEPLOYMENT
+
+Provide complete deployment instructions.
+
+Must include:
+
+* Apps Script deployment
+* permissions setup
+* anonymous access configuration
+* production deployment
+* rollback instructions
+
+---
+
+# PHASE 9 — TESTING
+
+Create a full QA checklist.
+
+## Must Test
+
+### Devices
+
+* iPhone Safari
+* Android Chrome
+* desktop browsers
+
+### Network Conditions
+
+* weak mobile network
+* slow upload
+* interrupted upload
+
+### Media Types
+
+* large videos
+* HEIC images
+* portrait videos
+
+---
+
+# PHASE 10 — MONITORING & MAINTENANCE
+
+Implement:
+
+* upload logging
+* error logging
+* quota monitoring
+
+---
+
+# REQUIRED DELIVERABLES
+
+The AI agent must produce:
+
+## 1. Full Google Apps Script backend
+
+Production-ready code.
+
+## 2. Full frontend
+
+HTML/CSS/JS.
+
+## 3. Deployment guide
+
+Step-by-step instructions.
+
+## 4. Security checklist
+
+## 5. Mobile optimization guide
+
+## 6. Testing guide
+
+## 7. QR print assets
+
+---
+
+# CODING REQUIREMENTS
+
+## Code Quality
+
+Code must be:
+
+* modular
+* documented
+* production-grade
+* readable
+* maintainable
+
+---
+
+## Frontend Requirements
+
+Use:
+
+* vanilla HTML/CSS/JS
+* no external frameworks unless justified
+* minimal dependencies
+
+---
+
+## Backend Requirements
+
+Use:
+
+* Google Apps Script only
+* DriveApp APIs
+* HtmlService
+
+---
+
+# UX REQUIREMENTS
+
+The UX must optimize for:
+
+* drunk wedding guests
+* low attention span
+* one-handed phone usage
+* poor lighting conditions
+* older non-technical guests
+
+Minimize:
+
+* typing
+* configuration
+* decisions
+* clicks
+
+---
+
+# IMPORTANT CONSTRAINTS
+
+DO NOT:
+
+* require app installation
+* require guest accounts
+* expose Google Drive publicly
+* use paid services
+* use complex authentication
+* use external databases unless absolutely necessary
+
+---
+
+# NICE-TO-HAVE FEATURES
+
+If feasible, also implement:
+
+## Optional Feature 1
+
+Live slideshow mode
+
+## Optional Feature 2
+
+Automatic image compression
+
+## Optional Feature 3
+
+Duplicate detection
+
+## Optional Feature 4
+
+Guest message attachment
+
+## Optional Feature 5
+
+AI-generated wedding highlights preparation
+
+---
+
+# EXPECTED OUTPUT FORMAT
+
+The AI agent must provide:
+
+1. System architecture
+2. Folder structure
+3. Backend code
+4. Frontend code
+5. Deployment steps
+6. Security notes
+7. Testing checklist
+8. Troubleshooting section
+
+All code must be complete and runnable.
+
+---
+
+# FINAL GOAL
+
+Deliver a polished production-ready private wedding cloud system where:
+
+* guests scan QR codes
+* upload photos/videos effortlessly
+* files safely arrive in Google Drive
+* couple gets centralized wedding memories
+* everything runs nearly maintenance-free during the wedding day
+
+```
+```
