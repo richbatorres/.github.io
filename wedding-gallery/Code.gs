@@ -841,7 +841,7 @@ function buildFileMetadata(file) {
     ? `https://drive.google.com/thumbnail?id=${fileId}&sz=w400`
     : `https://drive.google.com/thumbnail?id=${fileId}&sz=w400`;
 
-  // Full view URL: images get large thumbnail, videos get direct view link
+  // Full view URL: images get large thumbnail, videos get download link
   const viewUrl = isVideo
     ? `https://drive.google.com/uc?id=${fileId}&export=download`
     : `https://drive.google.com/thumbnail?id=${fileId}&sz=w1200`;

@@ -517,6 +517,15 @@
             display: none;
         }
 
+        .lightbox__iframe {
+            width: 90vw;
+            height: 70vh;
+            max-width: 900px;
+            border: none;
+            border-radius: 8px;
+            display: none;
+        }
+
         .lightbox__close {
             position: absolute;
             top: calc(16px + var(--safe-top));
@@ -766,7 +775,19 @@
         <button class="lightbox__close" id="lightboxClose" aria-label="Zatvori pregled">×</button>
         <button class="lightbox__nav lightbox__nav--prev" id="lightboxPrev" aria-label="Prethodna slika">‹</button>
         <img class="lightbox__content" id="lightboxImg" src="" alt="Fotografija u punoj veličini">
-        <video class="lightbox__content lightbox__video" id="lightboxVideo" controls playsinline></video>
+        <video class="lightbox__content lightbox__video" id="lightboxVideo" controls playsinline
+            style="display:none;"></video>
+        <iframe class="lightbox__content lightbox__iframe" id="lightboxIframe" src="" allowfullscreen
+            style="display:none;"></iframe>
+        <div id="lightboxDownload"
+            style="display:none; flex-direction:column; align-items:center; justify-content:center; color:white; text-align:center; gap:16px;">
+            <div style="font-size:4rem;">🎬</div>
+            <p style="font-size:1.1rem;">Video se ne može pogledati direktno na stranici</p>
+            <p style="font-size:0.9rem; color:#aaa;">Preuzmite video na uređaj za gledanje</p>
+            <a id="lightboxDownloadLink" href="#" target="_blank"
+                style="display:inline-block; padding:14px 32px; background:#c9a752; color:white; text-decoration:none; border-radius:8px; font-size:1rem; font-weight:600;">⬇️
+                Preuzmi video</a>
+        </div>
         <button class="lightbox__nav lightbox__nav--next" id="lightboxNext" aria-label="Sljedeća slika">›</button>
     </div>
 
@@ -831,6 +852,9 @@
                 lightboxNext: document.getElementById('lightboxNext'),
                 lightboxImg: document.getElementById('lightboxImg'),
                 lightboxVideo: document.getElementById('lightboxVideo'),
+                lightboxIframe: document.getElementById('lightboxIframe'),
+                lightboxDownload: document.getElementById('lightboxDownload'),
+                lightboxDownloadLink: document.getElementById('lightboxDownloadLink'),
                 srStatus: document.getElementById('srStatus')
             };
 
@@ -1327,15 +1351,16 @@
             }
 
             function showLightboxMedia(item) {
+                // Hide all
+                els.lightboxImg.style.display = 'none';
+                els.lightboxVideo.style.display = 'none';
+                els.lightboxIframe.style.display = 'none';
+                els.lightboxDownload.style.display = 'none';
+
                 if (item.isVideo) {
-                    els.lightboxImg.style.display = 'none';
-                    els.lightboxVideo.style.display = 'block';
-                    els.lightboxVideo.src = item.url;
-                    els.lightboxVideo.load();
+                    els.lightboxDownload.style.display = 'flex';
+                    els.lightboxDownloadLink.href = item.url;
                 } else {
-                    els.lightboxVideo.style.display = 'none';
-                    els.lightboxVideo.pause();
-                    els.lightboxVideo.src = '';
                     els.lightboxImg.style.display = 'block';
                     els.lightboxImg.src = item.url;
                     els.lightboxImg.alt = item.name || 'Fotografija u punoj veličini';
@@ -1345,10 +1370,11 @@
             function closeLightbox() {
                 els.lightbox.classList.remove('visible');
                 els.lightboxImg.src = '';
-                els.lightboxVideo.pause();
-                els.lightboxVideo.src = '';
-                els.lightboxVideo.style.display = 'none';
                 els.lightboxImg.style.display = 'block';
+                els.lightboxVideo.style.display = 'none';
+                els.lightboxIframe.src = '';
+                els.lightboxIframe.style.display = 'none';
+                els.lightboxDownload.style.display = 'none';
                 document.body.style.overflow = '';
                 state.lightboxIndex = -1;
             }
